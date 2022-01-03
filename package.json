@@ -1,0 +1,40 @@
+{
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "bcrypt": "^5.0.1",
+    "cloudinary": "^1.28.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dom": "^0.0.3",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.2",
+    "express-fileupload": "^1.2.1",
+    "googleapis": "^92.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.1.4",
+    "node-fetch": "^3.1.0",
+    "nodemailer": "^6.7.2",
+    "react": "^17.0.2",
+    "redux": "^4.1.2",
+    "router": "^1.3.6"
+  },
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "name": "final_project",
+  "description": "",
+  "version": "1.0.0",
+  "main": "server.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TungSmartPhan/Final_Project.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TungSmartPhan/Final_Project/issues"
+  },
+  "homepage": "https://github.com/TungSmartPhan/Final_Project#readme"
+}
