@@ -5,6 +5,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const fileupload = require("express-fileupload");
 
+//middleware
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -13,6 +14,7 @@ app.use(
     useTempFiles: true,
   })
 );
+express.urlencoded({extended: true})
 
 // Routers
 app.use('/user', require('./routes/userRouter'))

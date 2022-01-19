@@ -1,6 +1,7 @@
 const Users = require('../models/userModel')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const sendMail = require('../models/sendMail')
 
 const {CLIENT_URL} = process.env
 
@@ -17,7 +18,7 @@ const userCtrl = {
                 return res.status(400).json({message:"This email is unavailable. !!!"})
             }
 
-            const user = await User.findOne({email})
+            const user = await Users.findOne({email})
             if(user) {
                 return res.status(400).json({message:"This email is already exists. !!!"})
             }
@@ -27,18 +28,21 @@ const userCtrl = {
                 return res.status(400).json({message:"Password must be at least 6 characters"})
             }
 
+            //hash password
             const passwordHash = await bcrypt.hash(password,12)
             
+            // create token
             const newUser = {
                 name , email, password: passwordHash
-            }
-            
-            const activation_token = createActivaitonsToken(newUser)
+            } ;
+            const activation_token = createActivaitonsToken(newUser);
 
-            const url = `${CLIENT_URL}/user/activate/${activation_token}`
-            sendMail(email,url)
+            // sendMail from Admin thanhtung1482013@gmail.com
+            const url = `${CLIENT_URL}/user/activate/${activation_token}`;
+            sendMail(email, url, "Verify Your Email");
 
-            res.json({ message:"Register  Successfully, Please Activate your account before starting ^_^"})
+            //Register Successfully
+            res.json({ message:"Register  Successfully, Please Check Your Email  before starting ^_^"});
         } catch (error) {
             return res.status(500).json({ message: error.message})
         }
@@ -64,4 +68,4 @@ const createRefreshToken = (payload) => {
     return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {expiresIn: '7d'})
 }
 
-module.exports = userCtrl
+module.exports = userCtrl;

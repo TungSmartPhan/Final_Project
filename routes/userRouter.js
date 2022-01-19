@@ -3,4 +3,4 @@ const userCtrl = require('../controllers/userCtrl')
 
 router.post('/register', userCtrl.register)
 
-module.exports = router
+module.exports = router;
