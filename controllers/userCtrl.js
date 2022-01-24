@@ -61,19 +61,54 @@ const userCtrl = {
   activateEmail: async (req, res) => {
     try {
       //get token
-      const {activation_token} = req.body;
+      const { activation_token } = req.body;
       // verify token
-      const user = jwt.verify(activation_token, process.env.ACTIVATION_TOKEN_SECRET);
-      const {name, email, password } = user; 
+      const user = jwt.verify(
+        activation_token,
+        process.env.ACTIVATION_TOKEN_SECRET
+      );
+      const { name, email, password } = user;
+      console.log(user);
+
       // check user
-      const check  = await Users.findOne({ email});
-      if(check)return res.status(400).json({message: "This email is already register"})
+      const check = await Users.findOne({ email });
+      if (check)
+        return res
+          .status(400)
+          .json({ message: "This email is already register" });
       // add user to the đatabase
-      const newUser = new Users ({ name, email, password});
+      const newUser = new Users({ name, email, password });
       await newUser.save();
       // activation success
-      res.status(200).json({message: "Your account has been activated, you can now sign in "})
-    } catch {}
+      res.json({
+        message: "Your account has been activated, you can now sign in ",
+      });
+    } catch (error) {
+      return res.status(500).json({ message: error.message });
+    }
+  },
+  login: async (req, res) => {
+    try {
+      //get credentials
+      const {email, password} = req.body
+      //check email
+      const user = await Users.findOne({email})
+      if(!user) return res.status(400).json({message: "This Email is not registered in our system."})
+      //check password
+      const isMatch = await Users.findOne({password})
+      if(!isMatch) return res.status(400).json({message:"This password is incorrect." })
+      //refresh token
+      const refresh_token = createRefreshToken({id: user._id})
+      res.cookie('refreshtoken' ,  refresh_token ,{
+        httpOnly: true, 
+        path: '/user/refresh_token',
+        maxAge: 7*24*60*60*1000 //7days
+      })
+      // login success
+      res.status(200).json({message: "Login Successfully" })
+    } catch (error){
+res.status(500).json({message: error.message})
+    }
   },
 };
 

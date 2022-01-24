@@ -14,21 +14,24 @@ app.use(
     useTempFiles: true,
   })
 );
-express.urlencoded({extended: true})
+express.urlencoded({ extended: true });
 
 // Routers
-app.use('/user', require('./routes/userRouter'))
-
+app.use("/user", require("./routes/userRouter"));
 
 //connect to mongodb
 const URI = process.env.MONGODB_URL;
-mongoose.connect(URI, {
-    useNewUrlParser: true, 
-    useUnifiedTopology: true 
-    }, error => {
-    if(error) throw error;
-    console.log('Connected to MongoDB!!!')
-    });
+mongoose.connect(
+  URI,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  },
+  (error) => {
+    if (error) throw error;
+    console.log("Connected to MongoDB!!!");
+  }
+);
 
 app.use("/", (req, res, next) => {
   res.json({ message: "Hello My Project" });
