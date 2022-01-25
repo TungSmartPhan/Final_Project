@@ -15,7 +15,7 @@ app.use(
   })
 );
 express.urlencoded({ extended: true });
-
+app.use(cookieParser());
 // Routers
 app.use("/user", require("./routes/userRouter"));
 

@@ -90,24 +90,46 @@ const userCtrl = {
   login: async (req, res) => {
     try {
       //get credentials
-      const {email, password} = req.body
+      const { email, password } = req.body;
       //check email
-      const user = await Users.findOne({email})
-      if(!user) return res.status(400).json({message: "This Email is not registered in our system."})
+      const user = await Users.findOne({ email });
+      if (!user)
+        return res
+          .status(400)
+          .json({ message: "This Email is not registered in our system." });
       //check password
-      const isMatch = await Users.findOne({password})
-      if(!isMatch) return res.status(400).json({message:"This password is incorrect." })
+      const isMatch = await bcrypt.compare(password, user.password)
+      if (!isMatch)
+        return res.status(400).json({ message: "This password is incorrect." });
       //refresh token
-      const refresh_token = createRefreshToken({id: user._id})
-      res.cookie('refreshtoken' ,  refresh_token ,{
-        httpOnly: true, 
-        path: '/user/refresh_token',
-        maxAge: 7*24*60*60*1000 //7days
-      })
+      const refresh_token = createRefreshToken({ id: user._id });
+      res.cookie("refreshtoken", refresh_token, {
+        httpOnly: true,
+        path: "/user/refresh_token",
+        maxAge: 7 * 24 * 60 * 60 * 1000, //7days
+      });
       // login success
-      res.status(200).json({message: "Login Successfully" })
-    } catch (error){
-res.status(500).json({message: error.message})
+      res.status(200).json({ message: "Login Successfully" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+  getAccessToken: async (req, res) => {
+    try {
+      //refresh token
+      const rf_token = req.cookies.refreshtoken;
+      if(!rf_token) return res.status(400).json({ message: "Please Sign In"})
+      //validate  refresh token
+      jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (error, user) => {
+        if(error) return res.status(400).json({message:"Please Sign In again"})
+        //create access token
+        const access_token = createAccessToken({id: user.id})
+        res.json({access_token})
+        //access success
+        // return res.status(200).json({access_token})
+      })
+    } catch (error) {
+      return res.status(500).json({ message: error.message });
     }
   },
 };
