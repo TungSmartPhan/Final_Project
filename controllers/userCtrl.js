@@ -98,7 +98,7 @@ const userCtrl = {
           .status(400)
           .json({ message: "This Email is not registered in our system." });
       //check password
-      const isMatch = await bcrypt.compare(password, user.password)
+      const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch)
         return res.status(400).json({ message: "This password is incorrect." });
       //refresh token
@@ -118,16 +118,35 @@ const userCtrl = {
     try {
       //refresh token
       const rf_token = req.cookies.refreshtoken;
-      if(!rf_token) return res.status(400).json({ message: "Please Sign In"})
+      if (!rf_token) return res.status(400).json({ message: "Please Sign In" });
       //validate  refresh token
       jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (error, user) => {
-        if(error) return res.status(400).json({message:"Please Sign In again"})
+        if (error)
+          return res.status(400).json({ message: "Please Sign In again" });
         //create access token
-        const access_token = createAccessToken({id: user.id})
-        res.json({access_token})
+        const access_token = createAccessToken({ id: user.id });
+        res.json({ access_token });
         //access success
         // return res.status(200).json({access_token})
-      })
+      });
+    } catch (error) {
+      return res.status(500).json({ message: error.message });
+    }
+  },
+  forgotPassword: async (req, res) => {
+    try {
+      //get email
+      const { email } = req.body;
+      //check email
+      const user = await Users.findOne({ email });
+      if(!user) return res.status(200).json({ message:"This email does not exist"})
+      //create access token
+      const access_token = createAccessToken({ id: user.id });
+      //send email
+      const url = `${CLIENT_URL}/user/reset/${access_token}`
+      sendMail(email, url, "Reset Your Password")
+      //success
+      res.json({message: 'Your password has been reset, Please Check Your Email'})
     } catch (error) {
       return res.status(500).json({ message: error.message });
     }
