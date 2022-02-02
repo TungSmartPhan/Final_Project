@@ -139,14 +139,34 @@ const userCtrl = {
       const { email } = req.body;
       //check email
       const user = await Users.findOne({ email });
-      if(!user) return res.status(200).json({ message:"This email does not exist"})
+      if (!user)
+        return res.status(200).json({ message: "This email does not exist" });
       //create access token
       const access_token = createAccessToken({ id: user.id });
       //send email
-      const url = `${CLIENT_URL}/user/reset/${access_token}`
-      sendMail(email, url, "Reset Your Password")
+      const url = `${CLIENT_URL}/user/reset/${access_token}`;
+      sendMail(email, url, "Reset Your Password");
       //success
-      res.json({message: 'Your password has been reset, Please Check Your Email'})
+      res.json({
+        message: "Your password has been reset, Please Check Your Email",
+      });
+    } catch (error) {
+      return res.status(500).json({ message: error.message });
+    }
+  },
+  resetPassword: async function (req, res) {
+    try {
+      // get password
+      const { password } = req.body;
+      // hash password
+      const passwordHash = await bcrypt.hash(password, 12);
+      // update password
+      await Users.findOneAndUpdate(
+        { _id: req.user.id },
+        { password: passwordHash }
+      );
+      // reset password success
+      res.status(200).json({ message: "Your password has been updated"})
     } catch (error) {
       return res.status(500).json({ message: error.message });
     }
