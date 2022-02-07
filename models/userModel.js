@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
       default: "https://res.cloudinary.com/fpt-greenwich-vietnam-da-nang/image/upload/v1641319264/avatar/avatar_fco8ch.jpg"
   }
 },{ 
-    timestamp: true,
+    timestamps: true
 });
 
 module.exports = mongoose.model("User", userSchema);

@@ -140,7 +140,7 @@ const userCtrl = {
       //check email
       const user = await Users.findOne({ email });
       if (!user)
-        return res.status(200).json({ message: "This email does not exist" });
+        return res.status(400).json({ message: "This email does not exist" });
       //create access token
       const access_token = createAccessToken({ id: user.id });
       //send email
@@ -171,6 +171,17 @@ const userCtrl = {
       return res.status(500).json({ message: error.message });
     }
   },
+  getUserInfor: async (req, res) => {
+    try {
+      //get infor form user -password
+      const user = await Users.findById(req.user.id).select("-password");
+      //return user
+      res.status(200).json({user});
+    } catch (error) {
+      return res.status(500).json({ message: error.message })
+    }
+  }
+  
 };
 
 function validateEmail(email) {
