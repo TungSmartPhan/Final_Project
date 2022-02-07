@@ -180,8 +180,19 @@ const userCtrl = {
     } catch (error) {
       return res.status(500).json({ message: error.message })
     }
+  },
+  updateUser: async (req, res) => {
+    try {
+      //get infor
+      const{name, avatar} = req.body
+      //update user info
+      await Users.findOneAndUpdate({_id:req.user.id}, {name,avatar})
+      // success
+      res.status(200).json({ message:"Your profile has been updated"})
+    } catch (error) {
+      res.status(500).json({message: error.message})
+    }
   }
-  
 };
 
 function validateEmail(email) {
