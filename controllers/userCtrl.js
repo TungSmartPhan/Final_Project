@@ -192,6 +192,16 @@ const userCtrl = {
     } catch (error) {
       res.status(500).json({message: error.message})
     }
+  },
+  logout: async (req, res) => {
+    try {
+      //clear cookies
+      res.clearCookies("refreshtoken", {path: "/user/refresh_token"})
+      //success
+      return res.status(500).json({message: "Signout Successfully"})
+    } catch (error) {
+      res.status(500).json({message: error.message})
+    }
   }
 };
 
