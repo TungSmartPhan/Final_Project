@@ -2,6 +2,8 @@ const Users = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const sendMail = require("../models/sendMail");
+const { google } = require("googleapis");
+const { OAuth2 } = google.auth;
 
 const { CLIENT_URL } = process.env;
 
@@ -166,7 +168,7 @@ const userCtrl = {
         { password: passwordHash }
       );
       // reset password success
-      res.status(200).json({ message: "Your password has been updated"})
+      res.status(200).json({ message: "Your password has been updated" });
     } catch (error) {
       return res.status(500).json({ message: error.message });
     }
@@ -176,33 +178,84 @@ const userCtrl = {
       //get infor form user -password
       const user = await Users.findById(req.user.id).select("-password");
       //return user
-      res.status(200).json({user});
+      res.status(200).json({ user });
     } catch (error) {
-      return res.status(500).json({ message: error.message })
+      return res.status(500).json({ message: error.message });
     }
   },
   updateUser: async (req, res) => {
     try {
       //get infor
-      const{name, avatar} = req.body
+      const { name, avatar } = req.body;
       //update user info
-      await Users.findOneAndUpdate({_id:req.user.id}, {name,avatar})
+      await Users.findOneAndUpdate({ _id: req.user.id }, { name, avatar });
       // success
-      res.status(200).json({ message:"Your profile has been updated"})
+      res.status(200).json({ message: "Your profile has been updated" });
     } catch (error) {
-      res.status(500).json({message: error.message})
+      res.status(500).json({ message: error.message });
     }
   },
   logout: async (req, res) => {
     try {
       //clear cookies
-      res.clearCookies("refreshtoken", {path: "/user/refresh_token"})
+      res.clearCookie("refreshtoken", { path: "/user/refresh_token" });
       //success
-      return res.status(500).json({message: "Signout Successfully"})
+      return res.status(500).json({ message: "Signout Successfully" });
     } catch (error) {
-      res.status(500).json({message: error.message})
+      res.status(500).json({ message: error.message });
     }
-  }
+  },
+  googleLogin: async (req, res) => {
+    try {
+      //get token
+      const { tokenId } = req.body;
+      //verify the token id
+      const client = new OAuth2(process.env.G_MAILING_SERVICE_CLIENT_ID);
+      const verify = await client.verifyIdToken({
+        idToken: tokenId,
+        audience: process.env.G_MAILING_SERVICE_CLIENT_ID,
+      });
+      //get data
+      const { email_verified, email, name, picture } = verify.payload;
+      //failded  verification
+      if (!email_verified)
+        return res.status(400).json({ message: "Email verification failed !" });
+      // passed verification
+      const user = await Users.findOne({ email });
+      // 1. If user exists / sign in
+      if (user) {
+        //refresh_token
+        const refresh_token = createRefreshToken({ id: user._id });
+        // store cookie
+        res.cookie("refreshtoken", refresh_token, {
+          httpOnly: true,
+          path: "/user/refresh_token",
+          maxAge: 7 * 24 * 60 * 60 * 1000, //7days
+        });
+        return res
+          .status(200)
+          .json({ message: "Sign in with Google Successfully" });
+      } else {
+        //new user / create new user
+        const password = email + process.env.G_MAILING_SERVICE_CLIENT_ID;
+        const hashPassword = await bcrypt.hash(password, 12);
+
+        const newUser = Users({name,email, password: hashPassword, avatar: picture,});
+        await newUser.save();
+        // sign in the user
+         const refresh_token = createRefreshToken({ id: user._id });
+         res.cookie("refreshtoken", refresh_token, {
+           httpOnly: true,
+           path: "/user/refresh_token",
+           maxAge: 7 * 24 * 60 * 60 * 1000, //7days
+         });
+         //success
+         res.status(200).json({ message: "Sign in with Google Successfully"})
+      }
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
 };
 
 function validateEmail(email) {
