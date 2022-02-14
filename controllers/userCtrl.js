@@ -267,6 +267,15 @@ const userCtrl = {
     } catch (error) {
       return res.status(500).json({ message: error.message });
     }
+  },
+  updateUsersRole: async (req, res) => {
+    try {
+      const {role} = req.body;
+
+      await Users.findOneAndUpdate({_id: req.prams.id} , {role})
+    } catch (error) {
+      return res.status(500).json({ message: error.message });
+    }
   }
 };
 
