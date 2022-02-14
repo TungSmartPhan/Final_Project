@@ -256,6 +256,18 @@ const userCtrl = {
       res.status(500).json({ message: error.message });
     }
   },
+  // for Admin function
+  getUsersAllInfor: async (req, res) => {
+    try {
+      console.log(req.user)
+      //get all user
+      const users = await Users.find().select('-password')
+
+      res.json(users)
+    } catch (error) {
+      return res.status(500).json({ message: error.message });
+    }
+  }
 };
 
 function validateEmail(email) {
