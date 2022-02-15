@@ -273,6 +273,19 @@ const userCtrl = {
       const {role} = req.body;
 
       await Users.findOneAndUpdate({_id: req.prams.id} , {role})
+      return res
+          .status(200)
+          .json({ message: "Update role for user is completed" });
+    } catch (error) {
+      return res.status(500).json({ message: error.message });
+    }
+  }, 
+  deleteUser: async (req, res) => {
+    try {
+      await Users.findOneAndUpdate(req.prams.id)
+      return res
+          .status(200)
+          .json({ message: "Delete user is completed" });
     } catch (error) {
       return res.status(500).json({ message: error.message });
     }

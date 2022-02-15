@@ -16,5 +16,6 @@ router.post("/google_login", userCtrl.googleLogin)
 
 //Admin router
 router.get('/admin/all_infor', auth ,authAdmin , userCtrl.getUsersAllInfor)
-router .patch('/admin/update_role/:id', auth, authAdmin, userCtrl.updateUsersRole)
+router.patch('/admin/update_role/:id', auth, authAdmin, userCtrl.updateUsersRole)
+router.delete('/admin/delete/:id', auth, authAdmin, userCtrl.deleteUser)
 module.exports = router;
