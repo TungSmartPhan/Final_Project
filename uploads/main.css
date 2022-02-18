@@ -1,0 +1,818 @@
+/* Global Style : những thứ liên quan , những thứ dùng chung , thì nên code css chung ở phần đầu*/
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* Remove margin . remove padding remove all things */
+}
+
+html {
+  scroll-behavior: smooth;
+  /* When user click on the navigation link, it will take them to that section , and then we will have a smooth scrolling behavior, instead of an erupt change ( nhung thay doi dot ngot) */
+}
+
+img {
+  max-width: 100%;
+  width: 100%;
+}
+
+.container {
+  max-width: 1920px;
+  width: 100%;
+  margin: 0 auto;
+  /* Container vung chua tat ca cac content , co the goi no la tat ca noi dung co trong page */
+}
+
+.wrapper {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  /* wrapper la phan duoc bao boc  */
+}
+
+button {
+  font-family: "Domine", serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #fff;
+  background-color: var(--orange);
+  padding: 1em 2em;
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: var(--smooth);
+}
+
+button:hover {
+  color: var(--orange);
+  background-color: var(--light-pink);
+  transition: var(--smooth);
+}
+
+.pt {
+  padding-top: 10%;
+  /* section contagion () sẽ cách button của banner what is, ra */
+  /* section symtoms sẽ cách 3 cais cards của banner contagion () ra */
+  /* tương tự vs các section khác */
+}
+.section__heading {
+  text-align: center;
+  padding: 0 15px;
+}
+.section__tag {
+  font-size: 1.75rem;
+  font-family: "Red Hat Display", serif;
+  text-transform: capitalize;
+  color: var(--orange);
+}
+.section__title {
+  font-size: 3.125rem;
+  font-family: "Red Hat Display", serif;
+  text-transform: capitalize;
+  color: var(--green);
+  margin-bottom: 18px;
+}
+.section__detail {
+  font-size: 1.25rem;
+  font-family: "Domine";
+  color: var(--gray);
+  max-width: 700px;
+  margin: 0 auto;
+  /* 0 top bot, auto left right */
+}
+
+:root {
+  --orange: #fa5652;
+  --green: #035755;
+  --gray: #4b4f51;
+  --pink: #fee6e5;
+  --light-pink: #fff9f9;
+  --smooth: all 0.3s ease-in;
+  --shadow: 0 7px 29px 0 rgba(100, 100, 111, 0.2);
+}
+
+/* Header================*/
+
+#overlay {
+  /* overlay ni là điểm mờ, để người dùng khi mà mở menu ra , mà đang ở trong tình trạng ở vùng khác, ko có icon để đóng menu sidebar, thì đây là cách  */
+  /* nhấn vào vùng trống để đóng menu sidebar */
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  /* high view high */
+  width: 100vw;
+  /* high view width */
+  background: rgba(0, 0, 0, .4);
+  z-index: 4;
+  display: none;
+  /* sau đoạn này ta sẽ dùng một javascript để mà đóng cái menu đó,
+   cũng i chang vs hàm icon để đóng, nhưng mà mình ko cần phải làm nhiều, cơ bản đều giống nhau */
+
+   /* bây giờ ta sẽ tự define class cho nó , mà ko cần phải thêm class trong section overlay  */
+}
+#overlay.show{
+  display: initial;
+}
+
+header {
+  background-color: var(--light-pink);
+}
+
+.navbar {
+  /* flex làm cho mỗi bố cục như một các thẻ div nằm trên một hàng */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 15px 55px 15px;
+  background-color: var(--light-pink);
+}
+
+.navbar__logo {
+  display: flex;
+  align-items: center;
+}
+
+.navbar__logo img {
+  width: 63px;
+}
+.navbar__logo p {
+  font-family: "Red Hat Display", serif;
+  font-size: 1.125rem;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-left: 14px;
+}
+
+/* menu */
+.navbar__links {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 60%;
+  height: 100%;
+  /* position fix sẽ làm cho những thứ chỉnh vị trí theo top left bot và right tùy biến theo ý mình */
+  transform: translateX(-100%);
+  background-color: var(--orange);
+  opacity: 0;
+  z-index: 5;
+  transition: var(--smooth);
+}
+
+.navbar__links.navbar__open {
+  transform: translateX(0);
+  opacity: 1;
+  transition: var(--smooth);
+}
+
+.navbar__link {
+  font-size: 1.125rem;
+  margin: 55px;
+  list-style: none;
+}
+
+.navbar__link a {
+  font-family: "Domine", serif;
+  color: #fff;
+  text-decoration: none;
+  text-transform: capitalize;
+  transition: var(--smooth);
+}
+
+.navbar__link a:hover {
+  color: var(--green);
+  transition: var(--smooth);
+}
+
+.navbar__btn {
+  font-size: 1.125rem;
+  margin-left: 35px;
+  border: 2px solid var(--pink);
+}
+
+/* icon */
+.navbar__ham {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+  transition: var(--smooth);
+  z-index: 6;
+  /* Nếu có bất kì nội dung nào , muốn những item khác căn bằng cả trên cả dưới trái hay phải , ngay cả khi nó đang ở vị trí lộn xộn thì dùng   display: flex;
+  justify-content: center;
+  align-items: center; */
+}
+
+.navbar__icon {
+  width: 45px;
+  height: 6px;
+  background: var(--orange);
+  border-radius: 5px;
+  transition: var(--smooth);
+  position: relative;
+
+  /* position relative nghĩa là 2 cái sọc giả menu còn lại , phải liên quan đến cái sọc chính ( sọc menu) */
+}
+
+.navbar__icon:before,
+.navbar__icon:after {
+  content: "";
+  position: absolute;
+  /* absolute chắc là cố định 2 cái sọc giả với sọc menu chính  */
+  width: 45px;
+  height: 6px;
+  background: var(--orange);
+  border-radius: 5px;
+  transition: var(--smooth);
+  /* những phần dưới phải giống vs ở trên thì sọc mới giống nhau */
+}
+
+.navbar__icon:before {
+  transform: translateY(-12px);
+}
+
+.navbar__icon:after {
+  transform: translateY(12px);
+}
+
+/* icon animation + javascript*/
+.open .navbar__icon {
+  transform: translateX(-50px);
+  background: transparent;
+  /* sọc chính sẽ di chuyển sang trái và mờ dần trong suốt; */
+}
+
+.open .navbar__icon:before {
+  transform: rotate(45deg) translate(35px, -35px);
+  /* translate(x,y) với x là di chuyển theo trục x, y theo trục y */
+}
+
+.open .navbar__icon:after {
+  transform: rotate(-45deg) translate(35px, 35px);
+  /* translate(x,y) với x là di chuyển theo trục x, y theo trục y */
+}
+
+@media (min-width: 62em) {
+  .navbar__links {
+    position: initial;
+    transform: translateX(0);
+    opacity: 1;
+    background-color: var(--light-pink);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .navbar__link {
+    margin: 0 25px;
+    /* top bot : 0 , left right 25 khoang cach giua cac navbar__link */
+  }
+
+  .navbar__link a {
+    color: var(--green);
+  }
+  .navbar__link a:hover {
+    color: var(--orange);
+  }
+  .navbar__btn {
+    margin-left: 0;
+    border: none;
+  }
+  .navbar__ham {
+    display: none;
+    /* trong trường hợp này , khi màn hình có kích thước lớn hơn 62em thì .navbar__ham tức là cái toggle menu -> none  */
+  }
+}
+
+/* Banner ========*/
+#banner .container {
+  background-image: linear-gradient(to bottom, var(--light-pink), #fff);
+}
+
+.banner__desc {
+  display: flex;
+  flex-direction: column;
+  /* Ta muốn cái descriptions này sẽ hiện theo cột , 1 cột là cho thông tin , cột còn lại là ảnh covid */
+  text-align: center;
+  padding: 0 10px;
+}
+
+.banner__tag {
+  font-size: 1.375rem;
+  font-weight: bold;
+  font-family: "Red Hat Display", serif;
+  color: var(--orange);
+  text-transform: uppercase;
+  padding: 5px 0;
+}
+
+.banner__title {
+  font-size: 2.625rem;
+  font-weight: bold;
+  font-family: "Red Hat Display", serif;
+  color: var(--green);
+  text-transform: uppercase;
+  padding: 5px 0;
+}
+
+.banner__detail {
+  font-size: 1.5rem;
+  font-family: "Domine", serif;
+  color: var(--gray);
+  text-transform: capitalize;
+  margin-top: 25px;
+  padding: 5px 0;
+}
+
+.banner__btn {
+  margin-top: 54px;
+}
+.banner__btn button {
+  font-size: 1.5rem;
+}
+
+/* khi màn hình lớn hơn 62 triệu px */
+@media (min-width: 62em) {
+  #banner .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* lúc này view banner ta đã có 2 vùng nhờ space between , vùng bên trái là ảnh, vùng bên phải là thông tin và button */
+  }
+  .banner__img {
+    order: 2;
+    /* Order 2 để cho ảnh sẽ ở vùng 2(bên phải )*/
+  }
+  .banner__desc {
+    order: 1;
+    text-align: initial;
+    width: 60%;
+    padding: 0 0 0 240px;
+    /* 0 top 0 right 0 bot - left 240px để đưa cả cái desc này vào trong cái trình bao bọc wrapper */
+  }
+  .banner__detail {
+    max-width: 800px;
+    width: 100%;
+  }
+}
+
+/* What is ========*/
+#whatis .container {
+  position: relative;
+  /* relative là tương đối , mục đích của relative trong banner what is này là vì , theo bản design figma, ta sẽ tháy có hình virus bên mép phải, nếu để tuyệt đối thì ko thể chèn ảnh vào dc  */
+}
+
+.whatis__desc {
+  text-align: center;
+  padding: 0 15px;
+  /* top bot : 0 , left right 15px */
+}
+.whatis__btn {
+  margin-top: 56px;
+}
+.whatis__btn button {
+  font-size: 1.25rem;
+}
+
+@media (min-width: 62rem) {
+  #whatis .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .whatis__desc {
+    text-align: initial;
+    padding: 0 240px 0 0;
+    width: 45%;
+  }
+}
+
+/* Contagion (sự lây lan) ========*/
+.contagion__cards {
+  padding-top: 5%;
+  position: relative;
+}
+
+.contagion__card {
+  position: relative;
+  /* position relative , vị trí tương đối , vì bên cạnh cái card 1 có hình ảnh của virus corona ngang hàng vs 3 cái card */
+  max-width: 460px;
+  width: 90%;
+  height: 575px;
+  margin: 0 auto 50px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* flex + column +center là cái cột này sẽ có 3 thành phần nằm trong một cột như : img, h2 và p */
+  box-shadow: var(--shadow);
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  padding: 0 15px;
+  /* để nội dung ko bị tràn ra một bên với padding topbot 0 left right15 */
+  transition: var(--smooth);
+  /* để smooth vì , khi mình chọn tấm card sẽ có dòng highlight màu cam nổi bật */
+}
+.contagion__card:before {
+  /* tạo một cái sọc gạch cho mỗi cái card  */
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0%;
+  transform: translateX(-50%, 0);
+  width: 100%;
+  height: 10px;
+  background: transparent;
+  border-end-start-radius: 10px;
+  border-end-end-radius: 10px;
+  background-color: var(--green);
+  transition: var(--smooth);
+}
+
+.contagion__card:hover:before {
+  background-color: var(--orange);
+  transition: var(--smooth);
+}
+
+.contagion__card img {
+  max-width: 270px;
+}
+.contagion__card h2 {
+  padding-top: 55px;
+  font-size: 2.25rem;
+  font-family: "Domine", serif;
+  color: var(--green);
+  text-transform: capitalize;
+  text-align: center;
+}
+.contagion__card p {
+  font-family: "Domine", serif;
+  font: size 1.125rem;
+  color: var(--gray);
+  text-transform: capitalize;
+  text-align: center;
+  max-width: 380px;
+  padding-top: 13px;
+}
+@media (min-width: 62rem) {
+  /* màn hình lớn hơn 62 triệu m */
+  .contagion__cards {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    /* Flex-wrap Cho phép các items tự động xuống hàng hoặc vẫn luôn nằm trên cùng một hàng khi kích thước container thay đổi. Hơi khó hiểu nhỉ, xem demo dưới đây nha. Flex-wrap có 3 giá trị đó là wrap, nowrap và wrap-reverse. Mặc định là nowrap nên các bạn không cần phải set.2 thg 8, 2018 */
+  }
+
+  .contagion__cards:before {
+    /* mình ko cần phải add thêm image back ground , mình chỉ cần thêm một cái lớp before, một lớp giả để thêm cái ảnh virus ngay bên cạnh cái card số 1 */
+    content: "";
+    position: absolute; /*phải cố định cái icon(virus)-background này vs cái card 1 - Bằng cách áp dụng postion:absolute với  cái icon backgound virus, nó sẽ không để lại bất kỳ khoảng trống nào mà nó đã có.  */
+    background-image: url(./img/corona1-bg.png);
+    bottom: -55%;
+    left: -9%;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    /* ở trên chỗ .contagion__cards ở ngoài , phải thêm position relative , thì toàn bộ khung contagion ( chứa 3 cards) mới tương đối với cái icon background này */
+  }
+}
+
+/* To do====*/
+#todo .container {
+  position: relative;
+}
+
+/* có 3 hình ảnh về virus, và ta cần phải làm sao để nó giống với bản thiết kế.  các virus này sẽ phải dính ở ngoài rìa
+các div của 3 tấm ảnh này sẽ ở ngoài riêng với classname : wrapper nhưng vẫn ở trng container  của  phần To do nhé, nếu không nó sẽ tính phần trăm  khoảng cách từ virus đến phần todo sai chỗ
+Đương nhiên là ta sẽ không show nó trong mobile vì nó sẽ làm ảnh hưởng đến mobile, chỉ show trong desktop
+*/
+.todo__dec-1 {
+  position: absolute;
+  top: 25%;
+  left: 0;
+}
+.todo__dec-1 img {
+  width: 138px;
+  display: none;
+}
+
+.todo__dec-2 {
+  position: absolute;
+  top: 78%;
+  right: 0; /* ; tính từ right */
+}
+.todo__dec-2 img {
+  width: 128px;
+  display: none;
+}
+
+.todo__dec-3 {
+  position: absolute;
+  top: 85%;
+  right: 0;
+}
+.todo__dec-3 img {
+  width: 158px;
+  display: none;
+}
+
+.todo__steps {
+  /* là một cụm gồm 4 steps , mỗi step gồm todo_step */
+  padding-top: 5%;
+}
+
+.todo__step {
+  /* todo_step là một cụm gồm 4 thành phần , số thứ tự, tiêu đề h5 , thẻ p và cục div image */
+  display: flex;
+  flex-direction: column;
+}
+.todo__step-desc {
+  /* todo__step-desc là một cụm gồm 3 thành phần , số thứ tự, tiêu đề h5 , thẻ p */
+  text-align: center;
+  padding: 0 15px;
+  order: 2;
+  position: relative;
+}
+.todo__step-desc span {
+  /* todo__step-desc span là những thành phần con gồm 3 thành phần , số thứ tự, tiêu đề h5 , thẻ p , chỉnh những phần tử con . Với cụm 1 là số thứ tự , cụm 2 là div gồm  </h5> <p>*/
+  position: relative;
+  font-family: "Red Hat Display", serif;
+  font-size: 2.5rem;
+  color: var(--orange);
+}
+.todo__step-desc span:before {
+  /* absolute chắc là cố định background hình tròn màu pink  giả , với cái .todo__step-desc span chính, thằng cha đã là relative là có thể tùy biến, thì thằng con chỉ cần absolute, nên là nó sẽ cố định với thằng cha khi sài absolute
+  => Mà thằng cha .todo__step-desc span đi từ con số thứ tự trc , nên ở mục before này, cái background nó sẽ đi từ con số trc, chỉ cần chỉnh dài rộng hợp lý cân bằng với số thứ tự là dc */
+  /* Với kích thước và vị trí của hình tròn được trỉnh như bên dưới , nếu để hight cao hơn thì chìu dìa của hình tròn có thể mở rộng xuống dưới , nghĩa là lớp giả này nó bao hàm cả span nhé  */
+  content: "";
+  background-color: var(--pink);
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  z-index: -1;
+  border-radius: 50%;
+  transform: translate(-12%, -10%);
+}
+
+.center span:before {
+  transform: translate(-18%, -10%);
+  /* thêm 1 class center bên trong .todo__step-desc , từ đó ta chỉ cần .center và hướng đến thẻ span để chỉnh cái số thứ tự 1 về giữa vs cái icon giả (.todo__step-desc span:before) , 
+ - cái chỗ này tùng đang chỉnh CỤC HÌNH TRÒN  của cái số thứ tự 01 
+ nên classname đầy đủ là .todo_step-desc center nhé., số thứ tự nào bị lỗi thì mình có thể chỉnh riêng
+ */
+}
+
+.todo__step-desc h5 {
+  padding-top: 15px;
+  font-size: 2.875rem;
+  font-family: "Domine", serif;
+  color: var(--green);
+  text-transform: capitalize;
+}
+.todo__step-desc p {
+  font-size: 1.125rem;
+  font-family: "Domine", serif;
+  color: var(--gray);
+  text-transform: capitalize;
+  padding-top: 20px;
+}
+.todo__step-img {
+  order: 1;
+  padding: 15px 0;
+  text-align: center;
+}
+.todo__step-img img {
+  max-width: 565px;
+}
+
+@media (min-width: 62rem) {
+  .todo__step {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .todo__step-desc {
+    /* todo__step-desc là một cụm gồm 3 thành phần , số thứ tự, tiêu đề h5 , thẻ p + lưu ý không có dính Image trong này, đó là lý do tại sao order : 1 thì cụm 3 thành phần này đứng trước ảnh, còn ảnh sẽ là order 2*/
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: initial;
+    max-width: 800px;
+    width: 100%;
+    order: 1;
+  }
+  .todo__step-img {
+    order: 2;
+  }
+  .todo__step-desc span {
+    /* todo__step-desc span là những thành phần con gồm 3 thành phần , số thứ tự, tiêu đề h5 , thẻ p , chỉnh những phần tử con . Với cụm 1 là số thứ tự , cụm 2 là div gồm  </h5> <p>*/
+    display: flex;
+    align-items: baseline;
+    /* chúng ta chỉnh phần này, vì bản thiết kế số thứ tự nằm cùng càng với tiêu đề h5 => dùng flex và baseline; */
+  }
+  .ml {
+    /* margin left này nằm ở cục thẻ div bên trong span , bên trong span có 2 cụm , cụm 1: số tt, cụm 2 là div bên trong span */
+    /* mục đích ml là để cụm div, margin left vs số tt cho đẹp */
+    margin-left: 44px;
+  }
+  .todo__step:nth-child(even) .todo__step-desc {
+    /* even là số chẵn , nghĩa là mình muốn số 2 và số 4 => mô tả sẽ ở bên phải (vị trí 2)*/
+    order: 2;
+  }
+  .todo__step:nth-child(even) .todo__step-img {
+    /* even là số chẵn , nghĩa là mình muốn số 2 và số 4 => hình ở bên trái (vị trí 1)*/
+    order: 1;
+  }
+  .todo__step-desc span:before {
+    transform: translate(-12%, 10%);
+  }
+
+  .center span:before {
+    transform: translate(-18%, 10%);
+  }
+
+  /* hiện 3 icon virus ngoài viền liên quan đến phần todo */
+  .todo__dec-1 img {
+    display: initial;
+  }
+  .todo__dec-2 img {
+    display: initial;
+  }
+  .todo__dec-3 img {
+    display: initial;
+  }
+}
+
+/* Contact =============*/
+#contact .contact__title h1 {
+  font-family: "Domine", serif;
+  font-size: 2.75rem;
+  color: var(--green);
+  text-align: center;
+  text-transform: capitalize;
+  max-width: 720px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.contact__form {
+  /* contact form là thẻ div bên trong chứa input email và button , mục đích relative là để button nó di chuyển và nằm bên trong input */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  /* đây là css cho bản mobile nên hai thành phần trên sẽ flex theo cột từ trên xuống */
+  justify-content: center;
+  align-items: center;
+}
+
+.contact__form input {
+  font-family: "Domine", serif;
+  font-size: 1.375rem;
+  margin-top: 60px;
+  max-width: 800px;
+  width: 90%;
+  /* chiều dài của input đến 90% so với view mobile  */
+  height: 114px;
+  padding: 15px 15px 15px 35px;
+  /* padding là chỉnh căn bằng  theo  số liệu của nội dung bên trong của thẻ input , 
+  đối với view desktop nếu dùng padding không thì khoảng cách bị dịch ra sẽ vẫn tính là một khoảng từ điểm xuất phát đến thẻ của chúng ta
+  Khoảng cách mà nói ở đây vẫn tính cùng với thẻ nội dung mà ta muốn style nó.
+  - còn margin chỉ làm thay đổi vị trí mà không bị tích khoảng đó. 
+  */
+  border-radius: 200px;
+  box-shadow: var(--shadow);
+  border: none;
+}
+
+.contact__form input:focus {
+  outline: none;
+  /* mục đích của focus đối với thẻ input này là khi người dùng nhấp vào input , sẽ xóa cái focus outline màu vàng xấu xấu đó đi */
+  /* Mặc định khi nhập vào thẻ input sẽ ra cái viền vàng trông hơi xấu. */
+}
+
+.contact__form button {
+  font-size: 1.5rem;
+  margin-top: 60px;
+}
+
+@media (min-width: 62rem) {
+  /* Nếu màn hình là desktop view */
+  .contact__title h1 {
+    font-size: 3.375rem;
+  }
+
+  /* Khúc này mình sẽ định nghĩa cho cái button vào bên trong cái input cho nó đẹp. */
+  .contact__form {
+    /* trong contact form có 2 phần, thứ 1 là input thứ 2 là button */
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .contact__form input {
+    width: 100%;
+  }
+  .contact__form button {
+    /* Giải thích lại:  ví dụ cho 2 id ở 2 thẻ div riêng biệt : 2 thẻ cùng cho relative, thì hai thẻ này có thể position chồng đè lên nhau ở bất kì vị trí nào dù ở ngoài bất kì đâu cũng dc    <div id="first_element">First element</div> 
+  <div id="second_element">Second element</div> 
+    -----đối với những trường hợp có position là absolute : thì phải có thẻ cha là relative, thẻ con là absolute, thì cái thẻ con nó mới di chuyển ở bất kì vị trí nào, nằm bên trong thẻ cha , và không bị ảnh hưởng gì ra bên ngoài
+    <div id=”parent”>
+  <div id=”child”></div>
+  </div> */
+
+    /* https://dzone.com/articles/css-position-relative-vs-position-absolute link tham khảo */
+    position: absolute;
+    top: 20%;
+    right: 2%;
+    transform: translate(-2%, -20%);
+    /* -2 là dịch về phía bên trái trục X
+    -20 là dịch lên trên trục Y */
+  }
+}
+
+/* Footer =============*/
+/* Đầu tiên là view điện thoại nhé  */
+.footer__top {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 15px;
+}
+
+.footer__link {
+  list-style: none;
+  text-align: center;
+  padding: 15px 0px;
+}
+.footer__link:first-child {
+  margin-top: 20%;
+}
+
+.footer__link a {
+  font-family: "Domine", serif;
+  font-size: 1.375rem;
+  text-decoration: none;
+  color: var(--green);
+  transition: var(--smooth);
+}
+
+.footer__link a:hover {
+  color: var(--orange);
+  transition: var(--smooth);
+}
+
+.footer__socials {
+  /* thằng cha chứa 3 icon */
+  display: flex;
+  align-items: center;
+  margin-top: 10%;
+  flex-direction: row;
+}
+.footer__socials svg {
+  cursor: pointer;
+  margin: 0 15px;
+  color: var(--green);
+  transition: var(--smooth);
+}
+.footer__socials svg:hover {
+  color: var(--orange);
+  transition: var(--smooth);
+}
+
+.footer__bottom p {
+  font-family: "Domine", serif;
+  font-size: 1.125rem;
+  width: 95%px;
+  margin: 5% auto;
+  text-align: center;
+  color: var(--gray);
+}
+
+@media (min-width: 62em) {
+  .footer__top {
+    /* footer__top có 3 phần */
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .footer__links {
+    /* thẻ này gồm 4 thành phần link nhỏ gồm 4 chữ , chúng ta flex để nó tự chuyển thành row  */
+    display: flex;
+  }
+  .footer__link {
+    /* chỉnh những phần thử con: */
+    margin: 0 15px;
+  }
+  .footer__link:first-child {
+    margin-top: 0;
+  }
+  .footer__socials {
+    margin-top: 0;
+  }
+}

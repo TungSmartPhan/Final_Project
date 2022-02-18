@@ -1,0 +1,70 @@
+.wrapper {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  /* wrapper la phan duoc bao boc  */
+}
+
+header {
+  background-color: var(--light-pink);
+}
+
+.navbar {
+  /* flex làm cho mỗi bố cục như một các thẻ div nằm trên một hàng */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 15px 25px 15px;
+  background-color: var(--light-pink);
+}
+
+.navbar__logo {
+  display: flex;
+  align-items: center;
+}
+
+.navbar__logo img {
+  width: 63px;
+}
+.navbar__logo p {
+  font-family: "Red Hat Display", serif;
+  font-size: 1.125rem;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-left: 14px;
+}
+
+/* menu */
+.navbar__links {
+  transform: translateX(0);
+  opacity: 1;
+  background-color: var(--light-pink);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.navbar__link {
+  font-size: 1.125rem;
+  margin: 55px;
+  list-style: none;
+}
+
+.navbar__link a {
+  font-family: "Domine", serif;
+  color: var(--green);
+  text-decoration: none;
+  text-transform: capitalize;
+  transition: var(--smooth);
+}
+
+.navbar__link a:hover {
+  color: var(--orange);
+  transition: var(--smooth);
+}
+
+.navbar__btn {
+  font-size: 1.125rem;
+  margin-left: 35px;
+  border: 2px solid var(--pink);
+}
