@@ -14,7 +14,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 25px 15px 25px 15px;
+  padding: 5px 15px 5px 15px;
   background-color: var(--light-pink);
 }
 
@@ -56,6 +56,7 @@ header {
   text-decoration: none;
   text-transform: capitalize;
   transition: var(--smooth);
+  padding-left: 10px;
 }
 
 .navbar__link a:hover {

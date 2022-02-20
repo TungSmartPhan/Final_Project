@@ -13,3 +13,12 @@
     transform: rotate(360deg);
   }
 } */
+
+.App {
+  background: rgb(201, 208, 242);
+  background: linear-gradient(
+    90deg,
+    rgba(201, 208, 242, 0.8295693277310925) 0%,
+    rgba(255, 211, 241, 0.804359243697479) 100%
+  );
+}

@@ -1,0 +1,46 @@
+.reset__page {
+  height: 100vh;
+  background-color: rgba(77, 161, 77, 0.493);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: var(--smooth);
+}
+
+.reset__page h2 {
+  align-items: center;
+  font-size: 80px;
+  font-family: "Red Hat Display", serif;
+  color: var(--green);
+}
+
+.reset__page-logo {
+  border-radius: 50%;
+  transition: var(--smooth);
+  animation: float 6s linear infinite;
+  width: 20%;
+}
+
+.reset__p {
+  background-color: var(--purple);
+  padding: 5px 5px;
+  border-radius: 25px;
+  box-shadow: 0 4px 10px rgba(200, 236, 36, 0.836);
+  cursor: pointer;
+  width: 80px;
+  max-width: 100%;
+}
+
+.reset__p:hover {
+  color: var(--orange);
+  background-color: var(--light-pink);
+  transition: var(--smooth);
+}
+
+.reset__page p {
+  margin: 20px 0;
+  font-family: "Red Hat Display", serif;
+  background-color: var(--yellow);
+  text-align: center;
+}
