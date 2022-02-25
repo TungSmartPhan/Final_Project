@@ -1,0 +1,15 @@
+.avatar img {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+li h2 {
+  font-family: "Domine", serif;
+  color: var(--green);
+  text-decoration: none;
+  text-transform: capitalize;
+  transition: var(--smooth);
+  padding-left: 10px;
+}

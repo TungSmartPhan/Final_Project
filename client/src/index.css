@@ -120,6 +120,16 @@ ul {
   list-style: none;
 }
 
+.toast-failed {
+  background: #f03961 !important;
+  color: #fff;
+}
+
+.toast-success {
+  background: #46e731 !important;
+  color: #fff;
+}
+
 /* --------------------Header--------------------------- */
 @import url("./components/header/Header.css");
 
@@ -137,3 +147,15 @@ ul {
 
 /* --------------------Activate--------------------------- */
 @import url("./components/body/auth/activate/Activate.css");
+
+/* --------------------Appbar--------------------------- */
+@import url("./components/body/profile/appbar/AppBar.css");
+
+/* --------------------Avatar--------------------------- */
+@import url("./components/body/profile/avatar/Avatar.css");
+
+/* --------------------ProfileForm--------------------------- */
+@import url("./components/body/profile/ProfileForm.css");
+
+/* --------------------Profile--------------------------- */
+@import url("./components/body/profile/Profile.css");
