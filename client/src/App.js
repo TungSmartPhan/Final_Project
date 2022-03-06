@@ -29,7 +29,7 @@ function App() {
 
   //get user data for each person with permission token in global store
   useEffect(() => {
-    if (token) {
+    if(token) {
       const getUserInfor = async () => {
         dispatch({ type: "SIGNING" });
         const res = await axios.get("/user/user_infor", {

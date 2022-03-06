@@ -25,7 +25,7 @@ const ProfileForm = ({ NewAvatar }) => {
           name: name ? name : user.name,
           avatar: NewAvatar ? NewAvatar : user.avatar,
         },
-        {headers: { Authorization: token }}
+        {headers: { Authorization: token }},
       );
       console.log({"tra ve" : res});
       //after update new Infor into database we have to update it into global state
