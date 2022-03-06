@@ -32,6 +32,7 @@ const AuthReducer = (state, action) => {
         isLoggedIn: false,
         token: "",
         user: [],
+        isAdmin : false,
       };
     default:
       return state;

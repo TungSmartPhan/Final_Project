@@ -1,13 +1,4 @@
-const Input = ({
-  icon,
-  handleClick,
-  type,
-  name,
-  handleChange,
-  defaultValue,
-  disabled,
-  text
-}) => {
+const Input = ({icon,handleClick,type,name,handleChange,defaultValue,disabled,text}) => {
   return (
     <div className="input">
       <label>

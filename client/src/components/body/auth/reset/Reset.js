@@ -2,14 +2,14 @@ import React from "react";
 import { useState } from "react";
 import logoSecure from "../../../assets/img/security-svgrepo-com.png";
 import ResetForm from "./ResetForm";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; 
 
 const Reset = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
 
-  const handleClick = () => {
-    navigate("/user/login");
-  };
+  const handleClick = () => { 
+    navigate("/user/login");  
+  };  
 
   return (
     <div className="reset__page">

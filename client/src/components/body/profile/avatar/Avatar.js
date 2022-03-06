@@ -1,6 +1,6 @@
 
 
-const Avatar = () => {
+const Avatar = ({avatar}) => {
   return (
     <div className="avatar">
       <img

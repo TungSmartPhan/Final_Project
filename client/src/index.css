@@ -130,6 +130,10 @@ ul {
   color: #fff;
 }
 
+/* input[type="text"]:disabled{
+color: rgb(0, 0, 0);
+} */
+
 /* --------------------Header--------------------------- */
 @import url("./components/header/Header.css");
 
@@ -153,6 +157,8 @@ ul {
 
 /* --------------------Avatar--------------------------- */
 @import url("./components/body/profile/avatar/Avatar.css");
+/* --------------------AvatarProfile--------------------------- */
+@import url("./components/body/profile/avatar/AvatarProfile.css");
 
 /* --------------------ProfileForm--------------------------- */
 @import url("./components/body/profile/ProfileForm.css");
