@@ -24,7 +24,7 @@ const Profile = () => {
       const file = event.target.files[0];
       let formData = new FormData();
       formData.append("file", file);
-      console.log(formData.get("file"));
+      console.log(formData.get('file'))
       //upload  to cloudinary
       const res = await axios.post("/api/user/avatar_upload", formData, {
         headers: {

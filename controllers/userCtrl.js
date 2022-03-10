@@ -92,9 +92,9 @@ const userCtrl = {
   login: async (req, res) => {
     try {
       //get credentials
-      const { email, password } = req.body;
+      const { email, password } =req.body;
       //check email
-      const user = await Users.findOne({ email });
+      const user = await Users.findOne({email});
       if (!user)
         return res
           .status(400)
@@ -187,6 +187,7 @@ const userCtrl = {
     try {
       //get infor
       const { name, avatar } = req.body;
+      console.log(req.body);
       //update user info
       await Users.findOneAndUpdate({ _id: req.user.id }, { name, avatar });
       // success

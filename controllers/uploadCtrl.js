@@ -11,7 +11,9 @@ const uploadController = {
   uploadAvatar: async (req, res) => {
     try {
       //get file
+    console.log('upload file');
       const file = req.files.file;
+      console.log(file);
 
       cloudinary.v2.uploader.upload(file.tempFilePath, {
         folder: 'avatar', 

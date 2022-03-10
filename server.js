@@ -10,19 +10,20 @@ const uploadRouter = require('./routes/uploadRouter')
 //middleware
 const app = express();
 app.use(express.json());
+express.urlencoded({ extended: true });
 app.use(cors());
 app.use(
   fileupload({
     useTempFiles: true,
   })
 );
-express.urlencoded({ extended: true });
 app.use(cookieParser());
 // app.use("/uploads", express.static("uploads"))
 
 // Routers
 app.use("/user", require("./routes/userRouter"));
 app.use("/api/user",uploadRouter)
+app.use("/api/", require("./routes/categoryRouter"))
 
 //connect to mongodb
 const URI = process.env.MONGODB_URL;

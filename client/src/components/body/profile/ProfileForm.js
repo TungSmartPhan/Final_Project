@@ -15,25 +15,25 @@ const initialState = {
 const ProfileForm = ({ NewAvatar }) => {
   const [userData, setUserData] = useState(initialState);
   const { name, password } = userData;
-  const { user, token, dispatch } = useContext(AuthContext);
-
+  const auth = useContext(AuthContext);
+  const { user, token, dispatch } = auth;
   const updateInfor = async () => {
     try {
-      const res = await axios.patch(
+      const res = await axios.post(
         "/user/user_update",
         {
           name: name ? name : user.name,
-          avatar: NewAvatar ? NewAvatar : user.avatar,
+          // avatar: NewAvatar ? NewAvatar : user.avatar,
         },
-        {headers: { Authorization: token }},
+        { headers: { Authorization: token } }
       );
-      console.log({"tra ve" : res});
+      console.log(res);
       //after update new Infor into database we have to update it into global state
       const getUpdatedUser = await axios.get("/user/user_infor", {
-        Headers: { Authorization: token },
+        headers:{Authorization: token},
       });
       console.log(getUpdatedUser);
-      dispatch({ type: "GET_USER", payload: getUpdatedUser.user });
+      // dispatch({ type: "GET_USER", payload: getUpdatedUser.user });
       //response after updated new infor
       toast(res.message, {
         className: "toast-success",
@@ -62,22 +62,22 @@ const ProfileForm = ({ NewAvatar }) => {
 
   return (
     <>
-    <ToastContainer/>
-    <form className="login" onSubmit={handleSubmit}>
-      {/* <h3>Name</h3> */}
-      <Input
-        type="text"
-        text="Name"
-        name="name"
-        defaultValue={user.name}
-        handleChange={handleChange}
-      />
-      <Input type="text" text="Email" defaultValue={user.email} disabled />
-      <Input type="password" text="Password" handleChange={handleChange} />
-      <div className="update_btn">
-        <button type="submit">Update</button>
-      </div>
-    </form>
+      <ToastContainer />
+      <form className="login" onSubmit={handleSubmit}>
+        {/* <h3>Name</h3> */}
+        <Input
+          type="text"
+          text="Name"
+          name="name"
+          defaultValue={user.name}
+          handleChange={handleChange}
+        />
+        <Input type="text" text="Email" defaultValue={user.email} disabled />
+        <Input type="password" text="Password" handleChange={handleChange} />
+        <div className="update_btn">
+          <button type="submit">Update</button>
+        </div>
+      </form>
     </>
   );
 };

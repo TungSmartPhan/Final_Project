@@ -5,7 +5,7 @@ try {
     //check file exists
     // if(typeof req.file==='undefined' || typeof req.body==='undefined')
     // return res.status(400).json({ message: "Issue with uploading this image" });
-
+console.log(req.files);
     if(!req.files || Object.keys(req.files).length === 0)
     return res.status(400).json({ message: "No files were uploaded"})
 

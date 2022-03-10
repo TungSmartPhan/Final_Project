@@ -40,7 +40,7 @@ function LoginForm() {
         bodyClassName: "toast-failed",
       });
 
-    if (isLength(password))
+    if(isLength(password))
       return toast("Password must be at least 6 characters", {
         className: "toast-failded",
         bodyClassName: "toast-failed",
@@ -141,3 +141,4 @@ function LoginForm() {
 }
 
 export default LoginForm;
+

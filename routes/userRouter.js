@@ -10,8 +10,8 @@ router.post('/refresh_token', userCtrl.getAccessToken)
 router.post('/forgot',userCtrl.forgotPassword)
 router.post('/reset', auth,  userCtrl.resetPassword)
 router.get('/user_infor', auth, userCtrl.getUserInfor)
-router.patch('/user_update', auth, userCtrl.updateUser)
-router.get('/logout',userCtrl.logout)
+router.post('/user_update', auth, userCtrl.updateUser)
+router.get('/logout',userCtrl.logout) 
 router.post("/google_login", userCtrl.googleLogin)
 
 //Admin router
