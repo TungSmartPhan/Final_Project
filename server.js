@@ -24,6 +24,7 @@ app.use(cookieParser());
 app.use("/user", require("./routes/userRouter"));
 app.use("/api/user",uploadRouter)
 app.use("/api/", require("./routes/categoryRouter"))
+app.use("/api/", require("./routes/productRouter"))
 
 //connect to mongodb
 const URI = process.env.MONGODB_URL;

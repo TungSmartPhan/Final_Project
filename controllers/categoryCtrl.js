@@ -37,6 +37,22 @@ const categoryCtrl = {
       return res.status(500).json({ message: error.message });
     }
   },
+  updateCategory: async (req, res) => {
+    try {
+      const { name } = req.body;
+      const category = await Category.findById(req.params.id);
+      if (!category)
+        return res
+          .status(404)
+          .json({ message: "This category does not exist for updating" });
+      else {
+        await Category.findByIdAndUpdate({ _id: req.params.id }, { name });
+      }
+      res.json({ message: "Update category successfully" });
+    } catch (error) {
+      return res.status(500).json({ message: error.message });
+    }
+  },
 };
 
 module.exports = categoryCtrl;
