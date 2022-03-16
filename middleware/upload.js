@@ -9,7 +9,7 @@ module.exports = async function (req, res, next) {
 
     const file = req.files.file;
     //file type
-    le.mimetype.includes("png");
+   
 
     if (file.size > 1024 * 1024) {
       fs.unlinkSync(file.tempFilePath);
