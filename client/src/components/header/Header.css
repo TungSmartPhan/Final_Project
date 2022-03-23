@@ -70,9 +70,7 @@ header {
   border: 2px solid var(--pink);
 }
 
-/* .avatar{
-  position: relative;
-} */
+
 .avatar{
   display: flex;
   flex-direction: column;
@@ -90,6 +88,7 @@ header {
   border-radius: 50%;
   position: absolute;
   margin-left: 200px;
+  margin-top: -10px;
 }
 
 
@@ -115,5 +114,27 @@ header {
 
 .avatar:hover .dropdown{
   display: block;
+  transition: var(--smooth);
+}
+
+.cart-icon{
+  position: relative;
+}
+.cart-icon span{
+  background: crimson;
+  color: white;
+  border-radius: 50px;
+  position: absolute;
+  top: -10px;
+  right: -15px;
+  padding: 5px 7px;
+  font-size: 10px;
+  font-family: "Red Hat Display", serif;
+}
+.cart-icon .fa-cart-shopping{
+  color: var(--green);
+}
+.cart-icon .fa-cart-shopping:hover {
+  color: var(--orange);
   transition: var(--smooth);
 }

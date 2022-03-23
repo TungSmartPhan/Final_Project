@@ -6,6 +6,7 @@ import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+var FormData = require('form-data');
 
 const Profile = () => {
   const inputFile = useRef(null);

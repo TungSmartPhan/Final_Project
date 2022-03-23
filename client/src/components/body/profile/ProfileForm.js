@@ -2,7 +2,7 @@ import React from "react";
 import Input from "../auth/input/Input";
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { isEmpty, isEmail, isLength } from "../auth/helper/Validate";
+// import { isEmpty, isEmail, isLength } from "../auth/helper/Validate";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -23,7 +23,7 @@ const ProfileForm = ({ NewAvatar }) => {
         "/user/user_update",
         {
           name: name ? name : user.name,
-          // avatar: NewAvatar ? NewAvatar : user.avatar,
+          avatar: NewAvatar ? NewAvatar : user.avatar,
         },
         { headers: { Authorization: token } }
       );
@@ -54,7 +54,7 @@ const ProfileForm = ({ NewAvatar }) => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     if (name || NewAvatar) updateInfor();
 
     if (password) updatePassword();

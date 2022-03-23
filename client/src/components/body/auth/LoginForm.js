@@ -61,7 +61,7 @@ function LoginForm() {
       });
       console.log(error);
     }
-    handleReset();
+    // handleReset();
   };
 
   //reset after submit

@@ -24,7 +24,7 @@ const uploadController = {
         if (error) throw error;
         fs.unlinkSync(file.tempFilePath)
         console.log({result})
-        res.json({message:"Your avatar is uploaded",url: result.secure_url})
+        res.json({message:"Your avatar is uploaded", url: result.secure_url})
       })
     } catch (error) {
       res.status(500).json({ message: error.message });

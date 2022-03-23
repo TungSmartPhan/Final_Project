@@ -1,0 +1,47 @@
+.detail{
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 50px;
+    font-size: 150%;
+    align-items: center;
+    margin-left: 10%;
+}
+.detail img{
+max-width: 400px;
+width: 100%;
+/* margin: 10%; */
+height: 450px;
+object-fit: cover;
+display: block;
+}
+.box-detail{
+    max-width:500px;
+    width: 100%;
+    margin: 50px;
+}
+.box-detail .row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.box-detail h2{
+    text-transform: uppercase;
+    color: rgb(199, 60, 60);
+    letter-spacing: 2px;
+    font-weight: 2rem;
+}
+.box-detail p{
+    line-height: 1.5;
+    margin: 15px 0;
+    opacity: 0.8;
+}
+.box-detail .cart{
+    background: rgb(165, 235, 188);
+    color: var(--green);
+    margin-top: 10px;
+    padding: 10px 25px;
+    display: inline-block;
+    border-radius: 10px;
+}
