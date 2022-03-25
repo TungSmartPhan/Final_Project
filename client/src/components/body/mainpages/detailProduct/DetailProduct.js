@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import ProductItem from "../utils/productItem/ProductItem";
 
 function DetailProduct() {
   const params = useParams();
@@ -21,6 +22,7 @@ function DetailProduct() {
   console.log(detailProduct)
   if(detailProduct.length ===0) return null // must have , if not , we can get the value inside detailProduct to show on the front end
   return(
+      <>
       <div className="detail">
           <img src={detailProduct.images.url} alt="" />
           <div className="box-detail">
@@ -35,6 +37,19 @@ function DetailProduct() {
             <Link to="/cart" className="cart">Buy Now</Link>
           </div>
       </div>
+
+
+      <div>
+          <h2>Related products</h2>
+          <div className="products">
+              {
+                  products.map(product =>{
+                      return product.category === detailProduct.category ? <ProductItem key={product._id}  product={product}/> : null;
+                  })
+              }
+          </div>
+      </div>
+      </>
   )
 }
 

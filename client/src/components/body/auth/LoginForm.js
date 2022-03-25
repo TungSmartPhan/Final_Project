@@ -22,7 +22,6 @@ function LoginForm() {
 
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
-    console.log(setUser);
   };
 
   const login = async (e) => {

@@ -75,10 +75,9 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 200px;
+  width: 100%;
   background-color: rgb(182, 182, 39);
   /* position: relative; */
-  
 }
 
 .avatar img {
@@ -87,8 +86,8 @@ header {
   object-fit: cover;
   border-radius: 50%;
   position: absolute;
-  margin-left: 200px;
-  margin-top: -10px;
+  margin-left: 45%;
+  margin-top: -2%;
 }
 
 
@@ -105,11 +104,14 @@ header {
 .dropdown{
   position: absolute;
   background-color: rgba(140, 223, 238, 0.333);
-  width: 40%;
-  top: 60%;
-  left: 50%;
+  max-width: 100%;
+  width: 35%;
+  top: 58%;
+  /* z-index: 1; */
   display: none;
-  z-index: -1;
+  text-align: center;
+  border-bottom: 5px solid rgba(160, 22, 179, 0.5);
+  font-size: 20px;
 }
 
 .avatar:hover .dropdown{

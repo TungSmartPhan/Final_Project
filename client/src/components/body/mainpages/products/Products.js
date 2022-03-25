@@ -1,12 +1,16 @@
 import React, {useContext} from 'react'
 import ProductItem from '../utils/productItem/ProductItem'
 import { AuthContext } from "../../context/AuthContext";
-
+import Loading from '../utils/loading/Loading'
 function Products() {
   const auth = useContext(AuthContext);
 const [products] = auth.ProductState.productsAPI.products //watch browser is returned
 console.log(products)
   return (
+    <>
+    {
+     products.length === 0 && <Loading/>
+    }
     <div className="products">
         {
             products.map(product =>{
@@ -14,6 +18,7 @@ console.log(products)
             })
         }
     </div>
+    </>
   )
 }
 

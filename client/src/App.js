@@ -46,7 +46,7 @@ function App() {
     <div className="App">
       <Router>
         <Header />
-        <Body />
+        <Body  />
       </Router>
     </div>
   );

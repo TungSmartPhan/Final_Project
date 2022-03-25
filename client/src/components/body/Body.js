@@ -25,7 +25,7 @@ function Body() {
           path="user/login"
           element={ isLoggedIn ? <Profile/> : <Login />}
         />
-        {/* <Route path="user/profile" element={<Profile/>}/> */}
+        <Route path="user/profile" element={<Profile/>}/>
         {/* <Route path="user/forgot_password" element={<ForgotForm/>}/> */}
         <Route path="user/reset/:token" element={<Reset />} />
         <Route

@@ -7,7 +7,7 @@ import { AuthContext } from "../body/context/AuthContext";
 
 function Header() {
   const auth = useContext(AuthContext);
-  const { dispatch, user, isLoggedIn } = auth;
+  const { dispatch, user, isLoggedIn, isAdmin } = auth;
   console.log(auth);
 
   const handleLogout = async (e) => {
@@ -25,19 +25,25 @@ function Header() {
 
   const userLink = () => {
     return (
+      <>
       <div className="avatar">
         <Link to="/user/profile">
           <img src={user.avatar} alt="avatar" />
           <h3>
             {" "}
-            Hello! {user.name} <i className="fa-solid fa-arrow-down"></i>{" "}
+            Hello! {isAdmin ? " Admin" : null} {user.name} <i className="fa-solid fa-arrow-down"></i>{" "}
           </h3>
         </Link>
         <ul className="dropdown">
           <li>
             <Link to="/user/profile">Profile</Link>
           </li>
-      
+          { isAdmin ? (adminLink()) : null}
+          <li>
+            <Link to="/history" >
+             History
+            </Link>
+          </li>
           <li>
             <Link to="/" onClick={handleLogout}>
               Logout
@@ -45,8 +51,18 @@ function Header() {
           </li>
         </ul>
       </div>
+      </>
     );
   };
+
+  const adminLink = () => {
+    return (
+      <>
+      <li><Link to="/create_product">Create Products</Link></li>
+      <li><Link to="/category">Categories</Link></li>
+      </>
+    )
+  }
 
   return (
     <header className="container">
@@ -77,7 +93,7 @@ function Header() {
               {
                 //change icon when loggin | Global State AuthContext will check it after Logined
                 isLoggedIn ? (
-                  userLink()
+                  userLink() 
                 ) : (
                   <div>
                     <i className="fa-solid fa-user"></i>
@@ -86,6 +102,9 @@ function Header() {
                     </Link>
                   </div>
                 )
+                // || isAdmin ? (
+                //   adminLink()
+                // ) : 
               }
             </li>
           </ul>
