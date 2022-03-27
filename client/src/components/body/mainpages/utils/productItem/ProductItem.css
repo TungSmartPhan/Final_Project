@@ -61,3 +61,8 @@
     border-radius: 3px;
     color: rgb(20, 62, 104);
 }
+.product_card input{
+    position: absolute;
+    width: 25px;
+    height: 25px;
+}

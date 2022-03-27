@@ -34,6 +34,7 @@ const AuthReducer = (state, action) => {
         user: [],
         isAdmin : false,
       };
+    
     default:
       return state;
   }

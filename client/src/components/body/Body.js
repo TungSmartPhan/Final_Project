@@ -11,6 +11,7 @@ import { AuthContext } from "../body/context/AuthContext";
 
 import Products from "../body/mainpages/products/Products"
 import DetailProduct from "../body/mainpages/detailProduct/DetailProduct"
+import Cart from "../body/mainpages/cart/Cart"
 
 function Body() {
   const auth = useContext(AuthContext);
@@ -21,6 +22,7 @@ function Body() {
       <Routes>
         <Route path="/" element={<Products/>} />
         <Route path="/detail/:id" element={<DetailProduct/>} />
+        <Route path="/cart" element={<Cart/>}/>
         <Route 
           path="user/login"
           element={ isLoggedIn ? <Profile/> : <Login />}
@@ -32,8 +34,8 @@ function Body() {
           path="user/activate/:activation_token"
           element={<Activate />} //must same the path of Gmail
         />
+        
        <Route path="/*" element={<NotFound/>}/>
-        {/* </Route> */}
       </Routes>
     </section>
   );

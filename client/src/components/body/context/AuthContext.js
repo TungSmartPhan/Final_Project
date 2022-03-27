@@ -1,6 +1,8 @@
-import { createContext, useReducer, useState } from "react";
+import { createContext, useReducer, useState,useEffect } from "react";
+import axios from "axios";
 import AuthReducer from "../context/AuthReducer";
 import ProductsAPI from "../api/ProductsAPI";
+import UserAPI from "../api/UserAPI";
 
 const INITIAL_STATE = {
   user: [],
@@ -11,11 +13,23 @@ const INITIAL_STATE = {
 
 export const AuthContext = createContext(INITIAL_STATE);
 export const AuthContextProvider = ({ children }) => {
-  const ProductState = {
-    productsAPI:ProductsAPI(),
+  const [tokenUser, setTokenUser] = useState(false)
+  const refreshToken = async () => {
+    const res = await axios.post('/user/refresh_token')
+    setTokenUser(res.access_token)
   }
-  console.log(ProductState)
-  // ProductsAPI();
+
+  useEffect(() => {
+    const firstLogin = localStorage.getItem('_appLogin')
+    if(firstLogin) refreshToken()
+  },[])
+
+  const APIState =  {
+    tokenAPI: [tokenUser, setTokenUser],
+    productsAPI: ProductsAPI(),
+    userAPI: UserAPI(tokenUser),
+  };
+  console.log(APIState);
   const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
 
   return (
@@ -25,7 +39,7 @@ export const AuthContextProvider = ({ children }) => {
         isLoggedIn: state.isLoggedIn,
         token: state.token,
         isAdmin: state.isAdmin,
-        ProductState,
+        APIState,
         dispatch,
       }}
     >

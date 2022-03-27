@@ -171,3 +171,6 @@ color: rgb(0, 0, 0);
 
 /* --------------------DetailProduct--------------------------- */
 @import url("./components/body/mainpages/detailProduct/DetailProduct.css");
+
+/* --------------------Cart--------------------------- */
+@import url("./components/body/mainpages/cart/Cart.css");

@@ -24,6 +24,10 @@ const userSchema = new mongoose.Schema({
   avatar:{
       type: String,
       default: "https://res.cloudinary.com/fpt-greenwich-vietnam-da-nang/image/upload/v1641319264/avatar/avatar_fco8ch.jpg"
+  },
+  cart:{
+    type:Array,
+    default: []
   }
 },{ 
     timestamps: true

@@ -8,6 +8,7 @@ import { AuthContext } from "../body/context/AuthContext";
 function Header() {
   const auth = useContext(AuthContext);
   const { dispatch, user, isLoggedIn, isAdmin } = auth;
+  const [cart] = auth.APIState.userAPI.cart;
   console.log(auth);
 
   const handleLogout = async (e) => {
@@ -26,31 +27,30 @@ function Header() {
   const userLink = () => {
     return (
       <>
-      <div className="avatar">
-        <Link to="/user/profile">
-          <img src={user.avatar} alt="avatar" />
-          <h3>
-            {" "}
-            Hello! {isAdmin ? " Admin" : null} {user.name} <i className="fa-solid fa-arrow-down"></i>{" "}
-          </h3>
-        </Link>
-        <ul className="dropdown">
-          <li>
-            <Link to="/user/profile">Profile</Link>
-          </li>
-          { isAdmin ? (adminLink()) : null}
-          <li>
-            <Link to="/history" >
-             History
-            </Link>
-          </li>
-          <li>
-            <Link to="/" onClick={handleLogout}>
-              Logout
-            </Link>
-          </li>
-        </ul>
-      </div>
+        <div className="avatar">
+          <Link to="/user/profile">
+            <img src={user.avatar} alt="avatar" />
+            <h3>
+              {" "}
+              Hello! {isAdmin ? " Admin" : null} {user.name}{" "}
+              <i className="fa-solid fa-arrow-down"></i>{" "}
+            </h3>
+          </Link>
+          <ul className="dropdown">
+            <li>
+              <Link to="/user/profile">Profile</Link>
+            </li>
+            {isAdmin ? adminLink() : null}
+            <li>
+              <Link to="/history">History</Link>
+            </li>
+            <li>
+              <Link to="/" onClick={handleLogout}>
+                Logout
+              </Link>
+            </li>
+          </ul>
+        </div>
       </>
     );
   };
@@ -58,11 +58,15 @@ function Header() {
   const adminLink = () => {
     return (
       <>
-      <li><Link to="/create_product">Create Products</Link></li>
-      <li><Link to="/category">Categories</Link></li>
+        <li>
+          <Link to="/create_product">Create Products</Link>
+        </li>
+        <li>
+          <Link to="/category">Categories</Link>
+        </li>
       </>
-    )
-  }
+    );
+  };
 
   return (
     <header className="container">
@@ -82,18 +86,22 @@ function Header() {
               </Link>
             </li>
             <li>
-            <div className='cart-icon'>
-              <span>0</span>
-              <Link to="/">
-              <i className="fa-solid fa-cart-shopping"></i>
-              </Link>
-            </div>
-          </li>
+              {isAdmin ? (
+                " "
+              ) : (
+                <div className="cart-icon">
+                  <span>{cart.length}</span>
+                  <Link to="/cart">
+                    <i className="fa-solid fa-cart-shopping"></i>
+                  </Link>
+                </div>
+              )}
+            </li>
             <li className="navbar__link">
               {
                 //change icon when loggin | Global State AuthContext will check it after Logined
                 isLoggedIn ? (
-                  userLink() 
+                  userLink()
                 ) : (
                   <div>
                     <i className="fa-solid fa-user"></i>
@@ -102,9 +110,6 @@ function Header() {
                     </Link>
                   </div>
                 )
-                // || isAdmin ? (
-                //   adminLink()
-                // ) : 
               }
             </li>
           </ul>
