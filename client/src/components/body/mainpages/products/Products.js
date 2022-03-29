@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import ProductItem from "../utils/productItem/ProductItem";
 import { AuthContext } from "../../context/AuthContext";
 import Loading from "../utils/loading/Loading";
+import { ToastContainer} from "react-toastify";
+
 function Products() {
   const auth = useContext(AuthContext);
   const { isAdmin } = auth;
@@ -9,6 +11,7 @@ function Products() {
   console.log(products);
   return (
     <>
+    <ToastContainer />
       {products.length === 0 && <Loading />}
       <div className="products">
         {products.map((product) => {

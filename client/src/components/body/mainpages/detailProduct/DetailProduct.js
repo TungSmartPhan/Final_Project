@@ -7,7 +7,7 @@ function DetailProduct() {
   const params = useParams();
   //console.log(params) it just get the product._id using useParams but not get about information
   const auth = useContext(AuthContext);
-  const [products] = auth.ProductState.productsAPI.products;
+  const [products] = auth.APIState.productsAPI.products;
   const [detailProduct, setDetailProduct] = useState([])
 
   useEffect(() => {

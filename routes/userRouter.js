@@ -14,6 +14,8 @@ router.put('/user_update', auth, userCtrl.updateUser)
 router.get('/logout',userCtrl.logout) 
 router.post("/google_login", userCtrl.googleLogin)
 
+router.put('/addcart',auth, userCtrl.addCart)
+
 //Admin router
 router.get('/admin/all_infor', auth ,authAdmin , userCtrl.getUsersAllInfor)
 router.patch('/admin/update_role/:id', auth, authAdmin, userCtrl.updateUsersRole)

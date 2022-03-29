@@ -92,9 +92,9 @@ const userCtrl = {
   login: async (req, res) => {
     try {
       //get credentials
-      const { email, password } =req.body;
+      const { email, password } = req.body;
       //check email
-      const user = await Users.findOne({email});
+      const user = await Users.findOne({ email });
       if (!user)
         return res
           .status(400)
@@ -241,18 +241,38 @@ const userCtrl = {
         const password = email + process.env.G_MAILING_SERVICE_CLIENT_ID;
         const hashPassword = await bcrypt.hash(password, 12);
 
-        const newUser = Users({name,email, password: hashPassword, avatar: picture,});
+        const newUser = Users({
+          name,
+          email,
+          password: hashPassword,
+          avatar: picture,
+        });
         await newUser.save();
         // sign in the user
-         const refresh_token = createRefreshToken({ id: user._id });
-         res.cookie("refreshtoken", refresh_token, {
-           httpOnly: true,
-           path: "/user/refresh_token",
-           maxAge: 7 * 24 * 60 * 60 * 1000, //7days
-         });
-         //success
-         res.status(200).json({ message: "Sign in with Google Successfully"})
+        const refresh_token = createRefreshToken({ id: user._id });
+        res.cookie("refreshtoken", refresh_token, {
+          httpOnly: true,
+          path: "/user/refresh_token",
+          maxAge: 7 * 24 * 60 * 60 * 1000, //7days
+        });
+        //success
+        res.status(200).json({ message: "Sign in with Google Successfully" });
       }
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+  addCart: async (req, res) => {
+    try {
+      const user = await Users.findById(req.user.id);
+      if (!user)
+        return res.status(400).json({ message: "User does not exist." });
+
+      await Users.findOneAndUpdate(
+        { _id: req.user.id },
+        { cart: req.body.cart }
+      );
+      return res.json({ message: "Added to cart" });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
@@ -260,37 +280,35 @@ const userCtrl = {
   // for Admin function
   getUsersAllInfor: async (req, res) => {
     try {
-      console.log(req.user)
+      console.log(req.user);
       //get all user
-      const users = await Users.find().select('-password')
+      const users = await Users.find().select("-password");
 
-      res.json(users)
+      res.json(users);
     } catch (error) {
       return res.status(500).json({ message: error.message });
     }
   },
   updateUsersRole: async (req, res) => {
     try {
-      const {role} = req.body;
+      const { role } = req.body;
 
-      await Users.findOneAndUpdate({_id: req.prams.id} , {role})
+      await Users.findOneAndUpdate({ _id: req.prams.id }, { role });
       return res
-          .status(200)
-          .json({ message: "Update role for user is completed" });
+        .status(200)
+        .json({ message: "Update role for user is completed" });
     } catch (error) {
       return res.status(500).json({ message: error.message });
     }
-  }, 
+  },
   deleteUser: async (req, res) => {
     try {
-      await Users.findOneAndUpdate(req.prams.id)
-      return res
-          .status(200)
-          .json({ message: "Delete user is completed" });
+      await Users.findOneAndUpdate(req.prams.id);
+      return res.status(200).json({ message: "Delete user is completed" });
     } catch (error) {
       return res.status(500).json({ message: error.message });
     }
-  }
+  },
 };
 
 function validateEmail(email) {
