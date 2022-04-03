@@ -12,6 +12,7 @@ import { AuthContext } from "../body/context/AuthContext";
 import Products from "../body/mainpages/products/Products"
 import DetailProduct from "../body/mainpages/detailProduct/DetailProduct"
 import Cart from "../body/mainpages/cart/Cart"
+import OrderHistory from "./mainpages/history/OrderHistory";
 
 function Body() {
   const auth = useContext(AuthContext);
@@ -34,7 +35,7 @@ function Body() {
           path="user/activate/:activation_token"
           element={<Activate />} //must same the path of Gmail
         />
-        
+        <Route path="/history" element={isLoggedIn ? <OrderHistory /> : <NotFound/>}/>
        <Route path="/*" element={<NotFound/>}/>
       </Routes>
     </section>

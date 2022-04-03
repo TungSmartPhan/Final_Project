@@ -1,0 +1,32 @@
+.history-page{
+    overflow-x: auto;
+}
+.history-page h2, h4 {
+    text-align: center;
+    margin: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    font-size: 30px;
+}
+
+.history-page table {
+    margin: auto;
+    width: 80%;
+    background: linear-gradient(90deg, rgba(136, 71, 226, 0.628) 0%, rgba(126, 149, 240, 0.774) 100%);
+font-size: 20px;
+}
+
+.history-page table, th , tr, td {
+    border: 2px solid #fff;
+    border-collapse: collapse;
+}
+
+th, td{
+    text-align: center;
+    padding: 10px;
+    text-transform: capitalize;
+}
+
+table a{
+    color: rgb(251, 252, 253);
+}

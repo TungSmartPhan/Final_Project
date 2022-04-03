@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 // import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import PaypalButton from "./PaypalButton";
 
 function Cart() {

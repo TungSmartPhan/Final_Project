@@ -174,3 +174,6 @@ color: rgb(0, 0, 0);
 
 /* --------------------Cart--------------------------- */
 @import url("./components/body/mainpages/cart/Cart.css");
+
+/* --------------------OrderHistory--------------------------- */
+@import url("./components/body/mainpages/history/OrderHistory.css");

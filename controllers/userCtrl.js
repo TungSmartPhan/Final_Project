@@ -1,4 +1,5 @@
 const Users = require("../models/userModel");
+const Payments = require("../models/paymentModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const sendMail = require("../models/sendMail");
@@ -273,6 +274,14 @@ const userCtrl = {
         { cart: req.body.cart }
       );
       return res.json({ message: "Added to cart" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
+  history: async (req, res) => {
+    try {
+      const history = await Payments.find({ user_id: req.user.id });
+      res.json(history);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

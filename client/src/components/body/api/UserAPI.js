@@ -1,4 +1,4 @@
-import  { useState,  useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -13,6 +13,8 @@ function UserAPI(tokenUser) {
   const [isLogged, setIsLogged] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [cart, setCart] = useState([]);
+  const [history, setHistory] = useState([]);
+
   useEffect(() => {
     if (tokenUser) {
       const getUser = async () => {
@@ -34,13 +36,27 @@ function UserAPI(tokenUser) {
     }
   }, [tokenUser]);
 
+  useEffect(() => {
+    if (tokenUser) {
+      const getHistory = async () => {
+        const res = await axios.get("/user/history", {
+          headers: { Authorization: tokenUser },
+        });
+        console.log(res);
+        setHistory(res);
+      };
+      getHistory();
+    }
+  }, [tokenUser]);
+
   // if user want to add a new cart which is new product they want to buy but thet didnt login yet
   const addCart = async (product) => {
-    if (!isLogged) return toast("Please login to continue buying", {
-      //ở đây ta không có chổ để đễ ToastContainer, muốn nó hiện dc thông báo này thì component product.js sẽ là nơi để hiện, vì nó là component cha
-      className: "toast-failded",
-      bodyClassName: "toast-failed",
-    });
+    if (!isLogged)
+      return toast("Please login to continue buying", {
+        //ở đây ta không có chổ để đễ ToastContainer, muốn nó hiện dc thông báo này thì component product.js sẽ là nơi để hiện, vì nó là component cha
+        className: "toast-failded",
+        bodyClassName: "toast-failed",
+      });
     // nếu item mình chưa pick (item !== product) , thì nếu pick nó sẽ set quality là 1, là if(check)=>true, nếu đã pick rồi sẽ nhã else(false)
     //hay nói cách khác else(false) nghĩa là return (item._id == product._id) => chính vì == nên nó nghĩa là đã chọn
     const check = cart.every((item) => {
@@ -70,6 +86,7 @@ function UserAPI(tokenUser) {
     isAdmin: [isAdmin, setIsAdmin],
     cart: [cart, setCart],
     addCart: addCart,
+    history: [history, setHistory]
   };
 }
 

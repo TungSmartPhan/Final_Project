@@ -16,6 +16,7 @@ export const AuthContextProvider = ({ children }) => {
   const [tokenUser, setTokenUser] = useState(false)
   const refreshToken = async () => {
     const res = await axios.post('/user/refresh_token')
+    console.log(res)
     setTokenUser(res.access_token)
   }
 

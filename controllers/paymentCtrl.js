@@ -32,7 +32,7 @@ const paymentCtrl = {
 
             console.log(newPayment)
             await newPayment.save();
-            res.json({message: 'Payment Successfully 😊'})
+            // res.json({message: 'Payment Successfully 😊'})
             res.json({ newPayment })
         } catch (error) {
             return res.status(500).json({ message: error.message });

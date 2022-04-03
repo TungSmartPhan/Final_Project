@@ -15,6 +15,7 @@ router.get('/logout',userCtrl.logout)
 router.post("/google_login", userCtrl.googleLogin)
 
 router.put('/addcart',auth, userCtrl.addCart)
+router.get('/history', auth, userCtrl.history)
 
 //Admin router
 router.get('/admin/all_infor', auth ,authAdmin , userCtrl.getUsersAllInfor)
