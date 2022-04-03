@@ -25,7 +25,7 @@ function Body() {
         <Route path="/cart" element={<Cart/>}/>
         <Route 
           path="user/login"
-          element={ isLoggedIn ? <Profile/> : <Login />}
+          element={ isLoggedIn ? <NotFound/> : <Login />}
         />
         <Route path="user/profile" element={<Profile/>}/>
         {/* <Route path="user/forgot_password" element={<ForgotForm/>}/> */}

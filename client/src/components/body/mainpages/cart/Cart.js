@@ -1,7 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
-import  axios  from "axios";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import PaypalButton from "./PaypalButton";
 
 function Cart() {
   const auth = useContext(AuthContext);
@@ -25,12 +27,12 @@ function Cart() {
 
   //Với những hàm tăng , giảm xóa bên dưới ta sẽ làm nó hiện hữu trên front end , nhưng chưa được lưu trong database (user.cart)
   //Vì vậy ta chỉ cần update nó, update nó ngay sau khi setCart thay đổi , để useEffect load lại là nó hiện ra những gì có trong database là dc
-  const addCart = async () => {
+  const addCart = async (cart) => {
     await axios.put(
       "/user/addcart",
       { cart },
       {
-        headers: { Authorization: tokenUser},
+        headers: { Authorization: tokenUser },
       }
     );
   };
@@ -43,7 +45,7 @@ function Cart() {
       }
     });
     setCart([...cart]);
-    addCart();
+    addCart(cart);
   };
 
   //tạo hàm giamr số lượng
@@ -55,7 +57,7 @@ function Cart() {
       }
     });
     setCart([...cart]);
-    addCart();
+    addCart(cart);
   };
 
   //tạo hàm xóa lựa chọn product
@@ -67,8 +69,35 @@ function Cart() {
         }
       });
       setCart([...cart]);
-     addCart();
+      addCart(cart);
     }
+  };
+
+  //tạo hàm thanh toán thành công, lấy props payment từ bên component  kia
+  const tranSuccess = async (payment) => {
+    //if payment is successful , watch the console , and get what we want
+    console.log(payment);
+
+    const { paymentID, address } = payment;
+    //controller create payment đã có name và email, nên ta chỉ cần bỏ những cái chưa có vào thôi
+    await axios.post('api/payment', {cart, paymentID, address},{
+      headers: { Authorization: tokenUser}
+    })
+    //sau khi payment xong, setCart lại thành emty array
+    //với state cart ban đầu là từ UserApi, nhưng với state thứ 2 mình tự chọn là mảng rổng, thì khi này cái màn màn hình được thấy là state thứ 2 với mảng rỗng ([])
+    //hay nói cách khác là, khi mà setCart([]) thì state cart (ban đầu) lúc bấy h đã thành ([])
+    // => Front end bấy h đã thành refresh làm trống hết dữ liệu sau khi payment thành công. Còn database thì vẫn còn nguyên dữ liệu không vấn đề gì
+    //Hàm ý của chức năng này: khi payment thành công, trang chọn sản phẩm trước khi mua sẽ được reset lại cho sạch.
+
+    //lý do tại sao lại chuyển về mảng rỗng, vì khi mà payment thành công, nếu ko chuyển về mảng rỗng, thì cart bên trong setCart vẫn còn dữ liệu 
+    //và khi còn dữ liệu , thì addCart nhận vào (cart) và .put tức là update nó với giá trị vẫn còn đó, thì front end vẫn còn hiện ra những món hàng đã lựa chọn, cho dù đã payment thành công những món hàng đó rồi
+    //hay nói cách khác là chúng ta làm mới lại toạn bộ sự lựa chọn của người dùng ngay sau khi payment thành công. 
+    setCart([])
+    addCart([])
+    toast("You have successfully placed  an order.", {
+      className: "toast-success",
+      bodyClassName: "toast-success",
+    });
   };
 
   if (cart.length === 0)
@@ -108,7 +137,8 @@ function Cart() {
 
       <div className="total">
         <h3>Total: $ {total}</h3>
-        <Link to="#!">Payment</Link>
+        {/* <Link to="#!">Payment</Link> */}
+        <PaypalButton total={total} tranSuccess={tranSuccess} />
       </div>
     </div>
   );

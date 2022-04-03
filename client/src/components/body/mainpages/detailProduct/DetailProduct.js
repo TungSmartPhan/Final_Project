@@ -8,6 +8,7 @@ function DetailProduct() {
   //console.log(params) it just get the product._id using useParams but not get about information
   const auth = useContext(AuthContext);
   const [products] = auth.APIState.productsAPI.products;
+  const addCart = auth.APIState.userAPI.addCart;
   const [detailProduct, setDetailProduct] = useState([])
 
   useEffect(() => {
@@ -34,7 +35,7 @@ function DetailProduct() {
             <p>{detailProduct.description}</p>
             <p>{detailProduct.content}</p>
             <p>Sold: {detailProduct.sold}</p>
-            <Link to="/cart" className="cart">Buy Now</Link>
+            <Link to="/cart" className="cart" onClick={() => addCart(detailProduct)}>Buy Now</Link>
           </div>
       </div>
 
