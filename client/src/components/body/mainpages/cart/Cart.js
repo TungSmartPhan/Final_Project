@@ -11,6 +11,7 @@ function Cart() {
   const [tokenUser] = auth.APIState.tokenAPI;
   // console.log(tokenUser);
   const [cart, setCart] = auth.APIState.userAPI.cart;
+  const [callback, setCallback] = auth.APIState.userAPI.callback;
   const [total, setTotal] = useState(0);
 
   //sử dụng useEffect tạo chức năng tính tổng để bỏ vào useState total, với các giá trị API đã gọi về có trong product
@@ -94,6 +95,7 @@ function Cart() {
     //hay nói cách khác là chúng ta làm mới lại toạn bộ sự lựa chọn của người dùng ngay sau khi payment thành công. 
     setCart([])
     addCart([])
+    setCallback(!callback)
     toast("You have successfully placed  an order.", {
       className: "toast-success",
       bodyClassName: "toast-success",

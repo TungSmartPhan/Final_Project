@@ -12,21 +12,29 @@
 .history-page table {
     margin: auto;
     width: 80%;
-    background: linear-gradient(90deg, rgba(136, 71, 226, 0.628) 0%, rgba(126, 149, 240, 0.774) 100%);
+    background: linear-gradient(90deg, rgba(179, 140, 233, 0.628) 0%, rgba(52, 71, 149, 0.774) 100%);
 font-size: 20px;
 }
 
 .history-page table, th , tr, td {
     border: 2px solid #fff;
     border-collapse: collapse;
+    
 }
 
 th, td{
     text-align: center;
     padding: 10px;
     text-transform: capitalize;
+    font-size: 25px;
 }
 
 table a{
     color: rgb(251, 252, 253);
+}
+
+.history-page img{
+    width: 70px;
+    height: 100px;
+    object-fit: cover;
 }

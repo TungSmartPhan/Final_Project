@@ -11,8 +11,9 @@ function Header() {
   const [cart] = auth.APIState.userAPI.cart;
   console.log(auth);
 
+
   const handleLogout = async (e) => {
-    e.preventDefault();
+    // e.preventDefault(); i want to refresh the page so e = event i dont need that anymore
     try {
       await axios.get("/user/logout");
       localStorage.removeItem("_appLogin");

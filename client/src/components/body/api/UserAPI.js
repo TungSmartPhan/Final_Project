@@ -14,6 +14,15 @@ function UserAPI(tokenUser) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [cart, setCart] = useState([]);
   const [history, setHistory] = useState([]);
+  //tại sao chúng ta lại tạo callback false với useState, vì khi logout, xongn đăng nhập vào lại, phần history nó ko tự refresh để ta thấy lịch sử
+  // buộc người dùng phải tự reload lại trang, điều này khá là bất cập
+  // để giải quyết ta sẽ mặc định lúc đầu là false ở khúc, khi useEffect gọi history về => set dependence là false
+  //sau đó ở phần Cart tranSuccess set thêm setCallback(là true), thì logic nó sẽ đi như sau
+  // lúc đầu dependence là false, lúc này frontend chưa hiện và cần phải reload => nhưng khi setCallback(true) ở Cart.js, nghĩa là dependence đã bị thay đổi nhờ vào cái true, buộc useEffect phải reload 
+  // => chính vì vậy mà nó sẽ tự load chính nó nhờ vào dependence thay đổi, từ đó history list được hiện ra
+
+  //giải thích cho hiện tượng này, là vì chúng ta sử dụng react-router-dom , BrowserRouter... nó sẽ render trên 1 page nên thành ra nhiều cái nó ko tự reload mà nó chỉ reload đúng 1 lần, nên đôi khi sẽ có vài cái cần người dùng ấn tay
+const [callback, setCallback] = useState(false)
 
   useEffect(() => {
     if (tokenUser) {
@@ -47,7 +56,7 @@ function UserAPI(tokenUser) {
       };
       getHistory();
     }
-  }, [tokenUser]);
+  }, [tokenUser, callback]);
 
   // if user want to add a new cart which is new product they want to buy but thet didnt login yet
   const addCart = async (product) => {
@@ -86,7 +95,8 @@ function UserAPI(tokenUser) {
     isAdmin: [isAdmin, setIsAdmin],
     cart: [cart, setCart],
     addCart: addCart,
-    history: [history, setHistory]
+    history: [history, setHistory],
+    callback:[callback, setCallback]
   };
 }
 
