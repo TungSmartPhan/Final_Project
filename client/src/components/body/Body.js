@@ -15,9 +15,12 @@ import Cart from "../body/mainpages/cart/Cart"
 import OrderHistory from "./mainpages/history/OrderHistory";
 import OrderDetails from "./mainpages/history/OrderDetails";
 
+import Categories from "./mainpages/categories/Categories"
+import CreateProduct from "./mainpages/createProduct/CreateProduct";
+
 function Body() {
   const auth = useContext(AuthContext);
-  const { isLoggedIn } = auth;
+  const { isLoggedIn, isAdmin } = auth;
   
   return (
     <section>
@@ -36,6 +39,8 @@ function Body() {
           path="user/activate/:activation_token"
           element={<Activate />} //must same the path of Gmail
         />
+        <Route path="/category" element={isAdmin ? <Categories /> : <NotFound/>} />
+        <Route path="/create_product" element={isAdmin ? <CreateProduct />  : <NotFound/>} />
         <Route path="/history" element={isLoggedIn ? <OrderHistory/> : <NotFound/>}/>
         <Route path="/history/:id" element={isLoggedIn ? <OrderDetails/> : <NotFound/>}/>
        <Route path="/*" element={<NotFound/>}/>

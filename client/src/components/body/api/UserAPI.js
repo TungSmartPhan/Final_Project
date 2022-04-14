@@ -45,18 +45,7 @@ const [callback, setCallback] = useState(false)
     }
   }, [tokenUser]);
 
-  useEffect(() => {
-    if (tokenUser) {
-      const getHistory = async () => {
-        const res = await axios.get("/user/history", {
-          headers: { Authorization: tokenUser },
-        });
-        console.log(res);
-        setHistory(res);
-      };
-      getHistory();
-    }
-  }, [tokenUser, callback]);
+ 
 
   // if user want to add a new cart which is new product they want to buy but thet didnt login yet
   const addCart = async (product) => {

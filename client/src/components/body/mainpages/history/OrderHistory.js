@@ -1,11 +1,36 @@
-import {useContext} from 'react'
+import {useContext, useEffect} from 'react'
 import { AuthContext } from "../../context/AuthContext";
 import {Link} from "react-router-dom";
-
+import axios from "axios";
 
 function OrderHistory() {
     const state = useContext(AuthContext)
-    const [history] = state.APIState.userAPI.history;
+    const [history, setHistory] = state.APIState.userAPI.history;
+    const [isAdmin] = state.APIState.userAPI.isAdmin;
+    const [tokenUser] = state.APIState.tokenAPI;
+
+    useEffect(() => {
+      if (tokenUser) {
+        const getHistory = async () => {
+          if(isAdmin){
+            const res = await axios.get("/api/payment", {
+              headers: { Authorization: tokenUser },
+            });
+            console.log(res);
+            setHistory(res);
+          }else{
+            //else for client
+            const res = await axios.get("/user/history", {
+              headers: { Authorization: tokenUser },
+            });
+            console.log(res);
+            setHistory(res);
+          }
+        };
+        getHistory();
+      }
+    }, [tokenUser, isAdmin, setHistory]);
+
   return (
     <div className="history-page">
       <h2>History</h2>

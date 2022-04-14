@@ -177,3 +177,10 @@ color: rgb(0, 0, 0);
 
 /* --------------------OrderHistory--------------------------- */
 @import url("./components/body/mainpages/history/OrderHistory.css");
+
+/* --------------------Categories--------------------------- */
+@import url("./components/body/mainpages/categories/Categories.css");
+
+/* --------------------CreateProduct--------------------------- */
+@import url("./components/body/mainpages/createProduct//CreateProduct.css");
+

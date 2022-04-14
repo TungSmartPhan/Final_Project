@@ -19,7 +19,7 @@ module.exports = async function (req, res, next) {
     }
 
     //file type
-    if (file.mimetype !== "image/jpeg" && file.mimetype !== "image/png") {
+    if (file.mimetype !== "image/jpeg" &&  file.mimetype !== "image/png") {
       fs.unlinkSync(file.tempFilePath);
       return res.status(400).json({ message: "File format is incorrect" });
     }
