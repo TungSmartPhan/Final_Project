@@ -42,21 +42,59 @@ function CreateProduct() {
         let formData = new FormData()
             formData.append('file',  file)
             formData.append("upload_preset", "ml_default")
- 
-            for (var key of formData.entries()) {
-              console.log(key[0] + ', ' + key[1]);
-          }
             setLoading(true)
-            const res = await axios.post('/api/upload', formData, {
-                headers: {'content-type': 'multipart/form-data', Authorization: tokenUser}
+            // const res = await axios.post('/api/upload', formData, {
+            //     headers: {'content-type': 'multipart/form-data', Authorization: tokenUser}
+            // })
+            // dùng axios cho formData bị lỗi , lỗi được sữa bằng cách
+            const res = await fetch('api/upload', {
+              method: 'POST',
+              body: formData,
+              headers: {Authorization: tokenUser}
             })
             setLoading(false)
-            // setImages(res.data)
+            setImages(res)
             console.log(res);
     } catch (error) {
       alert(error.message);
     }
   };
+
+  const handleDestroy = async () => {
+    try {
+        if(!isAdmin) return alert("You're not an admin")
+        setLoading(true)
+        await axios.post('/api/destroy', {public_id: images.public_id}, {
+            headers: {Authorization: tokenUser}
+        })
+        setLoading(false)
+        setImages(false)
+    } catch (error) {
+        alert(error.message)
+    }
+}
+
+const handleChangeInput = event =>{
+  const {name, value} = event.target
+  setProduct({...product, [name]: value})
+}
+
+const handleSubmit = async event =>{
+  event.preventDefault()
+  try{
+    if(!isAdmin) return alert("You're not an admin")
+    if(!images) return alert("No Image Upload")
+
+   await axios.post('api/products', {...product, images} ,{
+    headers:{Authorization : tokenUser}
+    })
+    
+    setImages(false)
+    setProduct(initialState)
+  }catch(error){
+    alert(error.message)
+  }
+}
 
   const styleUpload = {
     display: images ? "block" : "none",
@@ -66,13 +104,16 @@ function CreateProduct() {
     <div className="create_product">
       <div className="upload">
         <input type="file" name="file" id="file_up" onChange={handleUpload} />
-        <div id="file_img" styles={styleUpload}>
-          <img src="" alt="" />
-          <span>X</span>
-        </div>
+       {
+         loading ?  <div id="file_img"><Loading/></div>
+         : <div id="file_img" styles={styleUpload}>
+         <img src={images ? images.utl : ''} alt="" />
+         <span onClick={handleDestroy}>X</span>
+       </div>
+       }
       </div>
 
-      <form>
+      <form onSubmit={ handleSubmit}>
         <div className="row">
           <label htmlFor="product_id">Product ID</label>
           <input
@@ -81,6 +122,7 @@ function CreateProduct() {
             id="product_id"
             required
             value={product.product_id}
+            onChange={handleChangeInput}
           />
         </div>
 
@@ -92,6 +134,7 @@ function CreateProduct() {
             id="title"
             required
             value={product.title}
+            onChange={handleChangeInput}
           />
         </div>
 
@@ -103,6 +146,7 @@ function CreateProduct() {
             id="price"
             required
             value={product.price}
+            onChange={handleChangeInput}
           />
         </div>
 
@@ -115,6 +159,7 @@ function CreateProduct() {
             required
             value={product.description}
             rows="5"
+            onChange={handleChangeInput}
           />
         </div>
 
@@ -127,12 +172,13 @@ function CreateProduct() {
             required
             value={product.content}
             rows="7"
+            onChange={handleChangeInput}
           />
         </div>
 
         <div className="row">
           <label htmlFor="categories">Categories: </label>
-          <select name="category" value={product.category}>
+          <select name="category" value={product.category} onChange={handleChangeInput} >
             <option value="">Please select a category</option>
             {categories.map((category) => (
               <option key={category._id} value={category._id}>

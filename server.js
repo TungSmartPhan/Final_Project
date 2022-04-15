@@ -3,9 +3,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const fileupload = require("express-fileupload");
+const fileUpload = require("express-fileupload");
 
-const uploadRouter = require('./routes/uploadRouter')
+const uploadRouter = require("./routes/uploadRouter");
 
 //middleware
 const app = express();
@@ -13,8 +13,7 @@ app.use(express.json());
 express.urlencoded({ extended: true });
 app.use(cors());
 app.use(
-  fileupload({
-    createParentPath: true,
+  fileUpload({
     useTempFiles: true,
   })
 );
@@ -24,10 +23,10 @@ app.use(cookieParser());
 // Routers
 app.use("/user", require("./routes/userRouter"));
 // app.use("/api/user",uploadRouter)
-app.use("/api/", require("./routes/categoryRouter"))
-app.use("/api/", require("./routes/productRouter"))
-app.use("/api/", require("./routes/paymentRouter"))
-app.use("/api/", require("./routes/uploadProduct"))
+app.use("/api/", require("./routes/categoryRouter"));
+app.use("/api/", require("./routes/productRouter"));
+app.use("/api/", require("./routes/paymentRouter"));
+app.use("/api/", require("./routes/uploadProduct"));
 
 //connect to mongodb
 const URI = process.env.MONGODB_URL;
