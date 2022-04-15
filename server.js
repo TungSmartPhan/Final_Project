@@ -14,6 +14,7 @@ express.urlencoded({ extended: true });
 app.use(cors());
 app.use(
   fileupload({
+    createParentPath: true,
     useTempFiles: true,
   })
 );
@@ -22,7 +23,7 @@ app.use(cookieParser());
 
 // Routers
 app.use("/user", require("./routes/userRouter"));
-app.use("/api/user",uploadRouter)
+// app.use("/api/user",uploadRouter)
 app.use("/api/", require("./routes/categoryRouter"))
 app.use("/api/", require("./routes/productRouter"))
 app.use("/api/", require("./routes/paymentRouter"))
