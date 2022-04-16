@@ -39,22 +39,25 @@ function CreateProduct() {
         //1mb
         return alert("File format is incorrect.");
 
-        let formData = new FormData()
-            formData.append('file',  file)
-            formData.append("upload_preset", "ml_default")
-            setLoading(true)
-            // const res = await axios.post('/api/upload', formData, {
-            //     headers: {'content-type': 'multipart/form-data', Authorization: tokenUser}
-            // })
-            // dùng axios cho formData bị lỗi , lỗi được sữa bằng cách
-            const res = await fetch('api/upload', {
-              method: 'POST',
-              body: formData,
-              headers: {Authorization: tokenUser}
-            })
-            setLoading(false)
-            setImages(res)
-            console.log(res);
+      let formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "ml_default");
+      setLoading(true);
+      // const res = await axios.post('/api/upload', formData, {
+      //     headers: {'content-type': 'multipart/form-data', Authorization: tokenUser}
+      // })
+      // dùng axios cho formData bị lỗi , lỗi được sữa bằng cách
+      const res = await fetch("api/upload", {
+        method: "POST",
+        body: formData,
+        headers: { Authorization: tokenUser },
+      });
+      //nếu viết theo kiểu fetch thì nhớ phải parse res thành json thì mới đọc được dữ liệu có ở bên trong
+      const data = await res.json();
+      setLoading(false);
+      console.log(res);
+      console.log(data);
+      setImages(data);
     } catch (error) {
       alert(error.message);
     }
@@ -62,39 +65,47 @@ function CreateProduct() {
 
   const handleDestroy = async () => {
     try {
-        if(!isAdmin) return alert("You're not an admin")
-        setLoading(true)
-        await axios.post('/api/destroy', {public_id: images.public_id}, {
-            headers: {Authorization: tokenUser}
-        })
-        setLoading(false)
-        setImages(false)
+      if (!isAdmin) return alert("You're not an admin");
+      setLoading(true);
+      await axios.post(
+        "/api/destroy",
+        { public_id: images.public_id },
+        {
+          headers: { Authorization: tokenUser },
+        }
+      );
+      setLoading(false);
+      setImages(false);
     } catch (error) {
-        alert(error.message)
+      alert(error.message);
     }
-}
+  };
 
-const handleChangeInput = event =>{
-  const {name, value} = event.target
-  setProduct({...product, [name]: value})
-}
+  const handleChangeInput = (event) => {
+    const { name, value } = event.target;
+    setProduct({ ...product, [name]: value });
+  };
 
-const handleSubmit = async event =>{
-  event.preventDefault()
-  try{
-    if(!isAdmin) return alert("You're not an admin")
-    if(!images) return alert("No Image Upload")
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      if (!isAdmin) return alert("You're not an admin");
+      if (!images) return alert("No Image Upload");
 
-   await axios.post('api/products', {...product, images} ,{
-    headers:{Authorization : tokenUser}
-    })
-    
-    setImages(false)
-    setProduct(initialState)
-  }catch(error){
-    alert(error.message)
-  }
-}
+      await axios.post(
+        "api/products",
+        { ...product, images },
+        {
+          headers: { Authorization: tokenUser },
+        }
+      );
+
+      setImages(false);
+      setProduct(initialState);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   const styleUpload = {
     display: images ? "block" : "none",
@@ -104,16 +115,20 @@ const handleSubmit = async event =>{
     <div className="create_product">
       <div className="upload">
         <input type="file" name="file" id="file_up" onChange={handleUpload} />
-       {
-         loading ?  <div id="file_img"><Loading/></div>
-         : <div id="file_img" styles={styleUpload}>
-         <img src={images ? images.utl : ''} alt="" />
-         <span onClick={handleDestroy}>X</span>
-       </div>
-       }
+        {loading ? (
+          <div id="file_img">
+            <Loading />
+          </div>
+        ) : (
+          <div id="file_img" style={styleUpload}>
+            <img src={images ? images.url : ""} alt="" />
+            <span onClick={handleDestroy}>X</span>
+            {/* {images ? <span onClick={handleDestroy}>X</span> : <div></div>} */}
+          </div>
+        )}
       </div>
 
-      <form onSubmit={ handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <div className="row">
           <label htmlFor="product_id">Product ID</label>
           <input
@@ -178,7 +193,11 @@ const handleSubmit = async event =>{
 
         <div className="row">
           <label htmlFor="categories">Categories: </label>
-          <select name="category" value={product.category} onChange={handleChangeInput} >
+          <select
+            name="category"
+            value={product.category}
+            onChange={handleChangeInput}
+          >
             <option value="">Please select a category</option>
             {categories.map((category) => (
               <option key={category._id} value={category._id}>
