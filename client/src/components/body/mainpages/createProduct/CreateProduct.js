@@ -31,6 +31,7 @@ function CreateProduct() {
 
   const [products] = state.APIState.productsAPI.products;
   const [onEdit, setOnEdit] = useState(false);
+  const [callback, setCallback] = state.APIState.productsAPI.callback
   useEffect(() => {
     setOnEdit(true);
     if (param.id) {
@@ -132,13 +133,14 @@ function CreateProduct() {
           }
         );
       }
+      setCallback(!callback);
       setImages(false);
       setProduct(initialState);
+      navigate("/");
       toast("Create Product Successfully", {
         className: "toast-success",
         bodyClassName: "toast-success",
       });
-      navigate("/");
     } catch (error) {
       alert(error.message);
     }

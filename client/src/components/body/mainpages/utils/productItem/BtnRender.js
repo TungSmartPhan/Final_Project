@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContext";
 
-function BtnRender({ product }) {
+function BtnRender({ product, deleteProduct }) {
   const auth = useContext(AuthContext);
   const { isAdmin } = auth;
   const addCart = auth.APIState.userAPI.addCart; //watch browser is returned
@@ -11,7 +11,7 @@ function BtnRender({ product }) {
     <div className="row_btn">
       {isAdmin ? (
         <>
-          <Link id="btn_buy" to="#">
+          <Link id="btn_buy" to="#" onClick={deleteProduct}>
             Delete
           </Link>
           <Link id="btn_view" to={`/edit_product/${product._id}`}>

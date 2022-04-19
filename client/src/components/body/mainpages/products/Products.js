@@ -9,6 +9,8 @@ function Products() {
   const auth = useContext(AuthContext);
   const { isAdmin } = auth;
   const [products] = auth.APIState.productsAPI.products; //watch browser is returned
+  const [tokenUser] = auth.APIState.tokenAPI
+  const [callback, setCallback] = auth.APIState.productsAPI.callback
   console.log(products);
 
 
@@ -23,6 +25,9 @@ function Products() {
               key={product._id}
               product={product}
               isAdmin={isAdmin}
+              tokenUser={tokenUser}
+              callback={callback}
+              setCallback={setCallback}
             />
           );
         })}
