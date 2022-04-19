@@ -119,7 +119,6 @@ function CreateProduct() {
       if (!isAdmin) return alert("You're not an admin");
       if (!images) return alert("No Image Upload");
 
-      setLoading(true);
       if(onEdit){
         await axios.put(`/api/products/${product._id}`, {...product, images},{
           headers:{Authorization: tokenUser}
@@ -133,7 +132,6 @@ function CreateProduct() {
           }
         );
       }
-      setLoading(false);
       setImages(false);
       setProduct(initialState);
       toast("Create Product Successfully", {
