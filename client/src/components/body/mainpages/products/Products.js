@@ -8,16 +8,10 @@ import axios from "axios";
 function Products() {
   const auth = useContext(AuthContext);
   const { isAdmin } = auth;
-  const [products, setProducts] = auth.APIState.productsAPI.products; //watch browser is returned
+  const [products] = auth.APIState.productsAPI.products; //watch browser is returned
   console.log(products);
 
-  useEffect(() => {
-    const getProducts = async () => {
-      const res = await axios.get("/api/products");
-      setProducts(res.products)
-    };
-    getProducts();
-  },[setProducts]);
+
   return (
     <>
       <ToastContainer />
