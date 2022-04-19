@@ -127,7 +127,7 @@ ul {
 
 .toast-success {
   background: #46e731 !important;
-  color: #fff;
+  color: rgb(7, 0, 203);
 }
 
 /* input[type="text"]:disabled{

@@ -41,6 +41,8 @@ function Body() {
         />
         <Route path="/category" element={isAdmin ? <Categories /> : <NotFound/>} />
         <Route path="/create_product" element={isAdmin ? <CreateProduct />  : <NotFound/>} />
+        <Route path="/edit_product/:id" element={isAdmin ? <CreateProduct />  : <NotFound/>} />
+
         <Route path="/history" element={isLoggedIn ? <OrderHistory/> : <NotFound/>}/>
         <Route path="/history/:id" element={isLoggedIn ? <OrderDetails/> : <NotFound/>}/>
        <Route path="/*" element={<NotFound/>}/>

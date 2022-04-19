@@ -18,7 +18,8 @@
 
 .product_box h2{
     width: 100%;
-    text-overflow: ellipsis;
+    /* Nếu chữ quá dài, css này sẽ làm chữ gọn lại với ba dấu chấm dòng 22 23*/
+    text-overflow: ellipsis; 
     overflow: hidden;
     white-space: nowrap;
     text-transform: capitalize;
