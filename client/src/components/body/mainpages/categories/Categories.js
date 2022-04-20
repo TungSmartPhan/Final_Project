@@ -21,7 +21,7 @@ function Categories() {
     try {
       if (onEdit) {
         const res = await axios.put(
-          `api/category/${id}`,
+          `/api/category/${id}`,
           { name: category },
           {
             headers: { Authorization: tokenUser },

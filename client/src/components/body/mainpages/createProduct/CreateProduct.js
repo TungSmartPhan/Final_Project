@@ -71,7 +71,7 @@ function CreateProduct() {
       //     headers: {'content-type': 'multipart/form-data', Authorization: tokenUser}
       // })
       // dùng axios cho formData bị lỗi , lỗi được sữa bằng cách
-      const res = await fetch("api/upload", {
+      const res = await fetch("/api/upload", {
         method: "POST",
         body: formData,
         headers: { Authorization: tokenUser },
