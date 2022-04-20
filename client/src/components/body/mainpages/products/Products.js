@@ -4,6 +4,7 @@ import { AuthContext } from "../../context/AuthContext";
 import Loading from "../utils/loading/Loading";
 import { ToastContainer } from "react-toastify";
 import axios from "axios";
+import Filters from './Filters'
 
 function Products() {
   const auth = useContext(AuthContext);
@@ -77,6 +78,7 @@ if(loading) return <div ><Loading /></div>;
   return (
     <>
       <ToastContainer />
+      <Filters/>
       {
         isAdmin && 
         <div className="delete-all">
