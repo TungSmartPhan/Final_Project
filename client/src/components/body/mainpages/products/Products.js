@@ -5,6 +5,7 @@ import Loading from "../utils/loading/Loading";
 import { ToastContainer } from "react-toastify";
 import axios from "axios";
 import Filters from './Filters'
+import LoadMore from './LoadMore'
 
 function Products() {
   const auth = useContext(AuthContext);
@@ -101,6 +102,7 @@ if(loading) return <div ><Loading /></div>;
           );
         })}
       </div>
+      <LoadMore/>
     </>
   );
 }

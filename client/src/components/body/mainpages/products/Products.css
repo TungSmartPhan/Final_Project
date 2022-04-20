@@ -32,3 +32,42 @@ margin: 20px;
    color: crimson;
    text-transform: uppercase;
 }
+
+/* --------------------Filter Menu--------------------------- */
+.filter_menu{
+    width: 100%;
+    min-height: 40px;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgb(133, 160, 198);
+    flex-wrap: wrap;
+}
+.filter_menu section, input{
+    border: 1px solid rgb(51, 46, 197);
+    outline: none;
+    height: 40px;
+    padding: 0 5px;
+}
+.filter_menu input{
+    flex: 1;
+    margin : 10px;
+}
+.filter_menu span{
+        text-transform: uppercase;
+        color: rgb(157, 9, 249);
+        letter-spacing: 1.3px;
+        font-weight: bold;
+}
+.filter_menu option{
+     text-transform: capitalize;
+        color: rgb(99, 55, 96);
+        letter-spacing: 1.3px;
+        font-weight: bold;
+}
+
+/* --------------------LoadMore--------------------------- */
+.load_more{
+    text-align : center;
+}

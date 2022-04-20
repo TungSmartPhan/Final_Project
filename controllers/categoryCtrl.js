@@ -1,4 +1,5 @@
 const Category = require("../models/categoryModel");
+const Products = require('../models/productModel')
 const categoryCtrl = {
   getCategories: async (req, res) => {
     try {
@@ -30,6 +31,10 @@ const categoryCtrl = {
   },
   deleteCategory: async (req, res) => {
     try {
+      // trong mỗi dữ liệu bên trong 1 product nào đấy, sẽ có category, thì hàm này sẽ kiểm tra xem, liệu những products này có liên quan đến category này ko => 
+      // => mục đích là, khi Admin muốn xóa một category nào đấy, mà bên trong nó vẫn còn dữ liệu thì ko dc phép xóa
+      const products = await Products.findOne({category: req.params.id})
+      if(products) return res.status(400).json({message: "Please delete all products with a relationship"})
       //choose _id in categories table to delete category with _id you want
       await Category.findByIdAndDelete(req.params.id);
       res.json({ message: "Delete category successfully" });
