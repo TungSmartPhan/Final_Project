@@ -11,7 +11,10 @@ function BtnRender({ product, deleteProduct }) {
     <div className="row_btn">
       {isAdmin ? (
         <>
-          <Link id="btn_buy" to="#" onClick={deleteProduct}>
+          {/* truyền hai đối số này vào hàm deleteProduct để nơi tạo hàm (Product.js) nhận dc hai giá trị này */}
+          {/* Tương tự ở đây nếu viết deleteProduct(product._id, product.images.public_id : thì nó sẽ toàn bộ bốc hết dữ liệu 
+          Để ko bị xóa hết một lúc thì phải trỏ đến những vị trí cần xóa và viết theo cách dưới ()=> */}
+          <Link id="btn_buy" to="#" onClick={() => deleteProduct(product._id, product.images.public_id)}> 
             Delete
           </Link>
           <Link id="btn_view" to={`/edit_product/${product._id}`}>
