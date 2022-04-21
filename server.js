@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
+//công đoạn deployment
+const path = require("path");
 
 const uploadRouter = require("./routes/uploadRouter");
 
@@ -41,6 +43,13 @@ mongoose.connect(
     console.log("Connected to MongoDB!!!");
   }
 );
+
+if(process.env.NODE_ENV === "production"){
+  app.use(express.static('client/build'))
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+  })
+}
 
 app.use("/", (req, res, next) => {
   res.json({ message: "Hello My Project" });
