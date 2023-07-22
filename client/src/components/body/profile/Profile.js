@@ -1,3 +1,4 @@
+import React from 'react';
 import { useRef, useState, useContext } from "react";
 import ProfileForm from "../profile/ProfileForm";
 import AvatarProfile from "./avatar/AvatarProfile";

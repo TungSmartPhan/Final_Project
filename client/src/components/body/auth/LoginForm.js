@@ -75,7 +75,8 @@ function LoginForm() {
   const googleSuccess = async (res) => {
     //need google id
     // if the google sign-in was a success -> gooogle will give us a token id and we want to get that first
-    const GGtoken = res?.tokenId;
+    // const GGtoken = res?.tokenId;
+    const GGtoken = res && res.tokenId;
     try {
       //call endpoint
       await axios.post("/user/google_login", { tokenId: GGtoken });

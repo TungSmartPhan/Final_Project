@@ -3,7 +3,8 @@ import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 import { toast } from "react-toastify";
-import PaypalButton from "./PaypalButton";
+import NewPaypalButton from "./NewPaypalButton";
+// import PaypalButton from "./PaypalButton";
 
 function Cart() {
   const auth = useContext(AuthContext);
@@ -140,7 +141,8 @@ function Cart() {
       <div className="total">
         <h3>Total: $ {total}</h3>
         {/* <Link to="#!">Payment</Link> */}
-        <PaypalButton total={total} tranSuccess={tranSuccess} />
+        {/* <PaypalButton total={total} tranSuccess={tranSuccess} /> */}
+        <NewPaypalButton total={total} tranSuccess={tranSuccess} />
       </div>
     </div>
   );
