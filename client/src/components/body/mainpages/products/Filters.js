@@ -4,6 +4,7 @@ import { AuthContext } from "../../context/AuthContext";
 function Filters() {
   const state = useContext(AuthContext);
   const categories = state.APIState.categoriesAPI.categories;
+  console.log('categoriesState: ', categories);
 
   const [category, setCategory] = state.APIState.productsAPI.category;
   const [sort, setSort] = state.APIState.productsAPI.sort;
@@ -21,11 +22,10 @@ function Filters() {
         <span>Filter: </span>
         <select name="category" value={category} onChange={handleCategory}>
           <option value="">All Products</option>
-
           {Array.isArray(categories) && // Check if categories is an array
             categories.map((category) => (
               <option value={"category=" + category._id} key={category._id}>
-                {category.name}
+                {category.name ? category.name : "Not Available"}
               </option>
             ))}
         </select>
@@ -42,6 +42,7 @@ function Filters() {
         <span>Sort By: </span>
         <select value={sort} onChange={(e) => setSort(e.target.value)}>
           <option value="">All Products</option>
+          {/* <option></option>     */}
           <option value="sort=oldest">Oldest</option>
           <option value="sort=-sold">Best Sales</option>
           <option value="sort=-price">Price: Hight-Low</option>
